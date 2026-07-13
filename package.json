@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource-variable/fraunces": "^5.2.9",
+    "@fontsource/nunito": "^5.2.7",
     "@supabase/supabase-js": "^2.110.2",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",

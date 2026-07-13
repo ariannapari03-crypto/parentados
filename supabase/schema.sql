@@ -1,4 +1,4 @@
--- Schema per l'app "Case Vacanze Famiglia".
+-- Schema per l'app "Parentados in vacanza".
 -- Da eseguire nel SQL editor di Supabase (progetto vuoto) prima del primo utilizzo.
 
 create extension if not exists "pgcrypto";
@@ -8,6 +8,7 @@ create table if not exists family_members (
   id uuid primary key default gen_random_uuid(),
   nome text not null,
   ruolo text not null check (ruolo in ('nipote', 'adulto')),
+  emoji text,
   created_at timestamptz not null default now()
 );
 
@@ -126,3 +127,8 @@ alter publication supabase_realtime add table shared_task_states;
 -- alter table checklist_states drop constraint checklist_states_flow_check;
 -- alter table checklist_states add constraint checklist_states_flow_check
 --   check (flow in ('pre-partenza', 'apertura', 'chiusura'));
+
+-- Migrazione: aggiunta l'emoji di profilo per ogni membro. Esegui questo
+-- comando una tantum se il tuo progetto e' stato creato prima:
+--
+-- alter table family_members add column if not exists emoji text;

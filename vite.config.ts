@@ -12,9 +12,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
-        name: 'Case Vacanze Famiglia',
-        short_name: 'Case Famiglia',
-        description: 'Gestione apertura/chiusura case vacanze di famiglia',
+        name: 'Parentados in vacanza',
+        short_name: 'Parentados',
+        description: 'Gestione delle case vacanze di famiglia: prenotazioni, checklist, guasti e oggetti in transito',
         theme_color: '#2b5c4c',
         background_color: '#edf1ea',
         display: 'standalone',

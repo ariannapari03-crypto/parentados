@@ -19,22 +19,28 @@ interface FamilyMemberRow {
   id: string
   nome: string
   ruolo: Ruolo
+  emoji: string | null
 }
 
 function mapFamilyMember(row: FamilyMemberRow): FamilyMember {
-  return { id: row.id, nome: row.nome, ruolo: row.ruolo }
+  return { id: row.id, nome: row.nome, ruolo: row.ruolo, emoji: row.emoji ?? null }
 }
 
 export async function listFamilyMembers(): Promise<FamilyMember[]> {
-  const { data, error } = await supabase.from('family_members').select('id, nome, ruolo').order('nome')
+  const { data, error } = await supabase.from('family_members').select('id, nome, ruolo, emoji').order('nome')
   if (error) throw error
   return (data as FamilyMemberRow[]).map(mapFamilyMember)
 }
 
-export async function addFamilyMember(nome: string, ruolo: Ruolo): Promise<FamilyMember> {
-  const { data, error } = await supabase.from('family_members').insert({ nome, ruolo }).select().single()
+export async function addFamilyMember(nome: string, ruolo: Ruolo, emoji: string | null): Promise<FamilyMember> {
+  const { data, error } = await supabase.from('family_members').insert({ nome, ruolo, emoji }).select().single()
   if (error) throw error
   return mapFamilyMember(data as FamilyMemberRow)
+}
+
+export async function updateFamilyMemberEmoji(id: string, emoji: string): Promise<void> {
+  const { error } = await supabase.from('family_members').update({ emoji }).eq('id', id)
+  if (error) throw error
 }
 
 export async function removeFamilyMember(id: string): Promise<void> {

@@ -2,6 +2,7 @@ import { NavLink, Outlet } from 'react-router-dom'
 import { useFamily } from '../context/FamilyContext'
 import { useRealtimeQuery } from '../hooks/useRealtimeQuery'
 import { listIssues } from '../lib/repo'
+import { memberEmoji } from '../lib/memberDisplay'
 
 const navItems = [
   { to: '/', label: 'Home', emoji: '🏠' },
@@ -16,15 +17,16 @@ export default function Layout() {
   const openIssuesCount = issues?.filter((i) => i.stato === 'aperto').length ?? 0
 
   return (
-    <div className="flex flex-col min-h-svh bg-bg text-ink font-sans">
-      <header className="sticky top-0 z-10 flex items-center justify-between border-b border-stone-line bg-surface/90 backdrop-blur px-4 py-3">
-        <div className="flex items-center gap-2 font-display font-bold text-shutter">
-          <span className="text-xl">🏡</span>
-          <span>Case Famiglia</span>
+    <div className="flex flex-col min-h-svh text-ink font-sans">
+      <header className="sticky top-0 z-10 flex items-center justify-between border-b border-stone-line bg-surface/85 backdrop-blur px-4 py-3">
+        <div className="flex items-baseline gap-2">
+          <span className="font-display font-semibold text-lg text-shutter leading-none">Parentados</span>
+          <span className="font-display italic text-sm text-terracotta leading-none">in vacanza</span>
         </div>
         {currentMember && (
-          <span className="text-sm text-ink-soft">
-            Ciao, <strong className="font-mono font-semibold text-ink">{currentMember.nome}</strong>
+          <span className="flex items-center gap-1.5 text-sm text-ink-soft">
+            <span className="text-base leading-none">{memberEmoji(currentMember)}</span>
+            <strong className="font-semibold text-ink">{currentMember.nome}</strong>
           </span>
         )}
       </header>
@@ -33,7 +35,7 @@ export default function Layout() {
         <Outlet />
       </main>
 
-      <nav className="fixed bottom-0 inset-x-0 z-10 border-t border-stone-line bg-surface pb-[env(safe-area-inset-bottom)]">
+      <nav className="fixed bottom-0 inset-x-0 z-10 border-t border-stone-line bg-surface/95 backdrop-blur pb-[env(safe-area-inset-bottom)]">
         <div className="mx-auto max-w-xl grid grid-cols-4">
           {navItems.map((item) => (
             <NavLink
@@ -41,7 +43,7 @@ export default function Layout() {
               to={item.to}
               end={item.to === '/'}
               className={({ isActive }) =>
-                `relative flex flex-col items-center gap-0.5 py-2 text-xs font-semibold ${
+                `relative flex flex-col items-center gap-0.5 py-2 text-xs font-semibold transition-colors ${
                   isActive ? 'text-shutter' : 'text-stone'
                 }`
               }

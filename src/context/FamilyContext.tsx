@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 import type { FamilyMember } from '../types/domain'
-import { addFamilyMember, listFamilyMembers, removeFamilyMember } from '../lib/repo'
+import { addFamilyMember, listFamilyMembers, removeFamilyMember, updateFamilyMemberEmoji } from '../lib/repo'
 import { supabase } from '../lib/supabase'
 
 const CURRENT_MEMBER_KEY = 'case-famiglia:current-member-id'
@@ -12,7 +12,8 @@ interface FamilyContextValue {
   currentMember: FamilyMember | null
   setCurrentMemberId: (id: string | null) => void
   refresh: () => Promise<void>
-  createMember: (nome: string, ruolo: 'nipote' | 'adulto') => Promise<FamilyMember>
+  createMember: (nome: string, ruolo: 'nipote' | 'adulto', emoji: string | null) => Promise<FamilyMember>
+  updateEmoji: (id: string, emoji: string) => Promise<void>
   deleteMember: (id: string) => Promise<void>
 }
 
@@ -61,10 +62,15 @@ export function FamilyProvider({ children }: { children: ReactNode }) {
     [members, currentMemberId],
   )
 
-  async function createMember(nome: string, ruolo: 'nipote' | 'adulto') {
-    const member = await addFamilyMember(nome, ruolo)
+  async function createMember(nome: string, ruolo: 'nipote' | 'adulto', emoji: string | null) {
+    const member = await addFamilyMember(nome, ruolo, emoji)
     await refresh()
     return member
+  }
+
+  async function updateEmoji(id: string, emoji: string) {
+    await updateFamilyMemberEmoji(id, emoji)
+    await refresh()
   }
 
   async function deleteMember(id: string) {
@@ -75,7 +81,7 @@ export function FamilyProvider({ children }: { children: ReactNode }) {
 
   return (
     <FamilyContext.Provider
-      value={{ members, loading, error, currentMember, setCurrentMemberId, refresh, createMember, deleteMember }}
+      value={{ members, loading, error, currentMember, setCurrentMemberId, refresh, createMember, updateEmoji, deleteMember }}
     >
       {children}
     </FamilyContext.Provider>

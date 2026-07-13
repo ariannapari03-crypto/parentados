@@ -1,24 +1,27 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: ui-rounded, "SF Pro Rounded", "Segoe UI Rounded", system-ui, sans-serif;
-  --font-sans: -apple-system, "Segoe UI", system-ui, sans-serif;
+  --font-display: "Fraunces Variable", "Fraunces", Georgia, serif;
+  --font-sans: "Nunito", -apple-system, "Segoe UI", system-ui, sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
 
-  --color-bg: #edf1ea;
-  --color-surface: #fffefa;
-  --color-surface-2: #f6f4ec;
+  --color-bg: #eef2e8;
+  --color-bg-2: #e6ede1;
+  --color-surface: #fffdf7;
+  --color-surface-2: #f5f2e8;
   --color-ink: #1c231e;
-  --color-ink-soft: #4b5248;
-  --color-shutter: #2b5c4c;
+  --color-ink-soft: #555c50;
+  --color-shutter: #2f6a52;
   --color-shutter-dark: #163027;
-  --color-terracotta: #c4622c;
+  --color-terracotta: #cc6638;
   --color-stone: #8a8b7e;
-  --color-stone-line: #dcdccd;
-  --color-sea: #3e6e82;
+  --color-stone-line: #dbdccb;
+  --color-sea: #3e7d92;
+  --color-lemon: #c99b1f;
+  --color-rose: #c1565a;
   --color-success: #3e7a5f;
   --color-warning: #b8862e;
-  --color-danger: #a63b2e;
+  --color-danger: #b03f30;
 }
 
 :root {
@@ -27,17 +30,20 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #141912;
-    --color-surface: #1b221b;
-    --color-surface-2: #212920;
-    --color-ink: #ede9d8;
+    --color-bg: #12160f;
+    --color-bg-2: #171c13;
+    --color-surface: #1c231b;
+    --color-surface-2: #232b21;
+    --color-ink: #eee9d7;
     --color-ink-soft: #b7bcac;
-    --color-shutter: #5fa98c;
+    --color-shutter: #63b191;
     --color-shutter-dark: #dff2ea;
-    --color-terracotta: #e2884f;
+    --color-terracotta: #e88b52;
     --color-stone: #8b9184;
     --color-stone-line: #333b30;
     --color-sea: #6fa7be;
+    --color-lemon: #e0b544;
+    --color-rose: #e0797d;
     --color-success: #58a37e;
     --color-warning: #d2a24c;
     --color-danger: #d2634c;
@@ -53,7 +59,9 @@ body {
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior-y: contain;
   font-family: var(--font-sans);
-  background: var(--color-bg);
+  background:
+    radial-gradient(120% 80% at 50% -10%, var(--color-bg-2), transparent 60%),
+    var(--color-bg);
   color: var(--color-ink);
 }
 
@@ -65,6 +73,12 @@ body {
 
 * {
   -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 40, "SOFT" 30;
+  letter-spacing: -0.01em;
 }
 
 .font-variant-tabular {

@@ -1,4 +1,4 @@
-# Case Vacanze Famiglia
+# Parentados in vacanza
 
 Webapp mobile-first (installabile come PWA) per gestire l'apertura/chiusura delle case vacanze di famiglia: calendario prenotazioni, checklist guidate di apertura/chiusura, oggetti in transito tra un soggiorno e l'altro, guasti condivisi e storico di chi ha aperto/chiuso cosa.
 

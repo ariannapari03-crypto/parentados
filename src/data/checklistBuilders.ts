@@ -258,7 +258,7 @@ export function chiudiFinestreTapparelle(): StepDef {
 }
 
 export function chiudiFinestreImposte(): StepDef {
-  return { id: 'chiudi-finestre', kind: 'confirm', emoji: '🪟', label: 'Chiudi finestre e "simil-imposte"' }
+  return { id: 'chiudi-finestre', kind: 'confirm', emoji: '🪟', label: 'Chiudi finestre e imposte' }
 }
 
 export function chiudiFinestre(): StepDef {

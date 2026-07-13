@@ -23,7 +23,7 @@ function HouseConfigBadges({ house }: { house: ReturnType<typeof getHouseBySlug>
   if (house.hasBoiler) badges.push('♨️ Boiler')
   if (house.hasDeumidificatore) badges.push('💨 Deumidificatore')
   if (house.hasTerrazzo) badges.push('🌞 Terrazzo')
-  if (house.serranda !== 'nessuna') badges.push(house.serranda === 'tapparelle' ? '🪟 Tapparelle' : '🪟 Simil-imposte')
+  if (house.serranda !== 'nessuna') badges.push(house.serranda === 'tapparelle' ? '🪟 Tapparelle' : '🪟 Imposte')
   if (house.supportsInverno) badges.push('❄️ Anche inverno')
   return (
     <div className="flex flex-wrap gap-1.5 mt-2">
@@ -175,8 +175,27 @@ export default function HouseDetailPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="font-display font-extrabold text-xl">{house.nome}</h1>
+      <div
+        className="rounded-2xl border p-4"
+        style={{
+          borderColor: `color-mix(in srgb, ${house.colore} 35%, transparent)`,
+          background: `linear-gradient(135deg, color-mix(in srgb, ${house.colore} 18%, var(--color-surface)), var(--color-surface) 75%)`,
+        }}
+      >
+        <div className="flex items-center gap-3">
+          <span
+            className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl shrink-0"
+            style={{ background: `color-mix(in srgb, ${house.colore} 24%, var(--color-surface))` }}
+          >
+            {house.emoji}
+          </span>
+          <div>
+            <h1 className="font-display font-semibold text-2xl leading-tight">{house.nome}</h1>
+            <p className="text-sm font-medium" style={{ color: house.colore }}>
+              {house.sottotitolo}
+            </p>
+          </div>
+        </div>
         <HouseConfigBadges house={house} />
         {house.accessoRiservato && (
           <p className="text-sm text-warning mt-2">
@@ -186,8 +205,8 @@ export default function HouseDetailPage() {
       </div>
 
       {house.infoGestione.length > 0 && (
-        <details className="rounded-xl border border-stone-line bg-surface px-4 py-3">
-          <summary className="font-display font-bold cursor-pointer">ℹ️ Informazioni di gestione</summary>
+        <details className="rounded-2xl border border-stone-line bg-surface px-4 py-3">
+          <summary className="font-display font-semibold cursor-pointer">ℹ️ Informazioni di gestione</summary>
           <div className="mt-3 space-y-3">
             {house.infoGestione.map((sezione) => (
               <div key={sezione.titolo}>
@@ -201,7 +220,8 @@ export default function HouseDetailPage() {
 
       <Link
         to={`/case/${house.slug}/prenota`}
-        className="block text-center rounded-lg bg-shutter text-white font-semibold py-2.5"
+        className="block text-center rounded-xl text-white font-semibold py-3 shadow-sm"
+        style={{ background: house.colore }}
       >
         + Prenota un soggiorno
       </Link>

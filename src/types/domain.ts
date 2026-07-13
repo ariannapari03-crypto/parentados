@@ -4,15 +4,19 @@ export interface FamilyMember {
   id: string
   nome: string
   ruolo: Ruolo
+  emoji: string | null // emoji di profilo scelta dal membro (fallback all'emoji del ruolo)
 }
 
 export type Stagione = 'estate' | 'inverno'
-export type SerrandaType = 'tapparelle' | 'simil-imposte' | 'nessuna'
+export type SerrandaType = 'tapparelle' | 'imposte' | 'nessuna'
 
 export interface House {
   id: string
   slug: string
   nome: string
+  emoji: string // emoji identificativa della casa
+  colore: string // colore identificativo (hex), usato per card e accenti
+  sottotitolo: string // breve descrizione (es. "al mare", "in montagna")
   hasGarage: boolean
   hasBoiler: boolean
   hasGas: boolean
