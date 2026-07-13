@@ -1,6 +1,6 @@
 import type { ChecklistFlow, ChecklistState } from '../types/domain'
 
-const KEY_STEP: Record<ChecklistFlow, string> = {
+const KEY_STEP: Partial<Record<ChecklistFlow, string>> = {
   apertura: 'apertura-acqua',
   chiusura: 'chiusura-acqua',
 }
@@ -9,7 +9,7 @@ const KEY_STEP: Record<ChecklistFlow, string> = {
 export function extractResponsible(state: ChecklistState | null | undefined): { da: string | null; quando: string | null } {
   if (!state) return { da: null, quando: null }
   const key = KEY_STEP[state.flow]
-  const keyStep = state.steps[key]
+  const keyStep = key ? state.steps[key] : undefined
   if (keyStep?.fatto) return { da: keyStep.da, quando: keyStep.quando }
   // fallback: ultimo step completato per timestamp
   const done = Object.values(state.steps).filter((s) => s.fatto && s.quando)

@@ -44,7 +44,7 @@ export interface Booking {
   createdAt: string
 }
 
-export type ChecklistFlow = 'apertura' | 'chiusura'
+export type ChecklistFlow = 'pre-partenza' | 'apertura' | 'chiusura'
 
 export interface ChecklistStepState {
   fatto: boolean

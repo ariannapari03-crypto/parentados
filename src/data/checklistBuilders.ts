@@ -76,8 +76,8 @@ export function chiudiBoiler(): StepDef {
   return { id: 'chiusura-boiler', kind: 'confirm', emoji: '♨️', label: 'Chiudi il boiler' }
 }
 
-export function chiudiFrigoFreezer(): StepDef {
-  return { id: 'chiudi-frigo-freezer', kind: 'confirm', emoji: '🧊', label: 'Chiudi frigo e freezer' }
+export function accendiFrigoFreezer(): StepDef {
+  return { id: 'chiudi-frigo-freezer', kind: 'confirm', emoji: '🧊', label: 'Accendi frigo e freezer' }
 }
 
 export function scopriMobili(): StepDef {
@@ -223,8 +223,7 @@ export function differenziataMare(): StepDef {
     id: 'differenziata',
     kind: 'confirm',
     emoji: '♻️',
-    label:
-      'Differenziata: prendi la tessera in ingresso, ai bidoni pulsante + appoggia carta + pedale e butta — sacco grigio indifferenziata, sacchetto biodegradabile umido, sacchetto qualsiasi plastica/carta/vetro',
+    label: 'Butta l’immondizia (differenziata e non) e ricorda di prendere la tessera!',
   }
 }
 

@@ -15,8 +15,8 @@ export default defineConfig({
         name: 'Case Vacanze Famiglia',
         short_name: 'Case Famiglia',
         description: 'Gestione apertura/chiusura case vacanze di famiglia',
-        theme_color: '#0f766e',
-        background_color: '#f8fafc',
+        theme_color: '#2b5c4c',
+        background_color: '#edf1ea',
         display: 'standalone',
         start_url: '/',
         icons: [

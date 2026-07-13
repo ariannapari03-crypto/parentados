@@ -274,6 +274,11 @@ export async function markHandoffDelivered(id: string): Promise<void> {
   if (error) throw error
 }
 
+export async function deleteHandoffItem(id: string): Promise<void> {
+  const { error } = await supabase.from('handoff_items').delete().eq('id', id)
+  if (error) throw error
+}
+
 // --- issues ---
 
 interface IssueRow {

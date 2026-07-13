@@ -96,7 +96,7 @@ export default function ChecklistWizardPage() {
     }
   }, [bookingId, flow, steps.length, currentIndex])
 
-  if (loadingBooking || loadingSteps) return <p className="text-slate-400 text-sm">Caricamento...</p>
+  if (loadingBooking || loadingSteps) return <p className="text-stone text-sm">Caricamento...</p>
   if (!booking || !house || !flow) return <p>Soggiorno non trovato.</p>
   if (!currentMember) return null
 
@@ -146,14 +146,20 @@ export default function ChecklistWizardPage() {
   }
 
   if (currentStep === null) {
+    const doneMessage =
+      flow === 'chiusura'
+        ? 'Amen: il tuo lavoro qui è finito, alla prossima missione.'
+        : flow === 'apertura'
+          ? 'Apertura completata!'
+          : 'Pre partenza completata, buon viaggio!'
     return (
       <div className="text-center py-10 space-y-4">
         <p className="text-5xl">✅</p>
-        <h1 className="text-xl font-bold">
-          {flow === 'chiusura' ? 'Amen: il tuo lavoro qui è finito, alla prossima missione.' : 'Apertura completata!'}
-        </h1>
-        <p className="text-slate-500 dark:text-slate-400">{house.nome} · {formatDateRange(booking.dataInizio, booking.dataFine)}</p>
-        <Link to={`/case/${house.slug}`} className="inline-block rounded-lg bg-teal-700 text-white font-medium px-5 py-2.5">
+        <h1 className="font-display font-extrabold text-xl">{doneMessage}</h1>
+        <p className="text-ink-soft">
+          {house.nome} · <span className="font-mono">{formatDateRange(booking.dataInizio, booking.dataFine)}</span>
+        </p>
+        <Link to={`/case/${house.slug}`} className="inline-block rounded-lg bg-shutter text-white font-semibold px-5 py-2.5">
           Torna alla casa
         </Link>
       </div>
@@ -161,34 +167,38 @@ export default function ChecklistWizardPage() {
   }
 
   const progressLabel = `${currentIndex}/${visibleSteps.length}`
+  const flowLabel = flow === 'pre-partenza' ? 'Pre partenza' : flow === 'apertura' ? 'Apertura' : 'Chiusura'
 
   return (
     <div className="space-y-5">
       <div>
-        <p className="text-xs text-slate-400 uppercase tracking-wide">
-          {house.nome} · {flow === 'apertura' ? 'Apertura' : 'Chiusura'} · {progressLabel}
+        <p className="font-mono text-[11px] font-bold text-stone uppercase tracking-widest">
+          {house.nome} · {flowLabel}
         </p>
-        <div className="h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 mt-1 overflow-hidden">
-          <div
-            className="h-full bg-teal-600 transition-all"
-            style={{ width: `${(currentIndex / Math.max(1, visibleSteps.length)) * 100}%` }}
-          />
+        <div className="flex items-center gap-1.5 mt-1.5">
+          <span className="font-mono text-xs font-bold text-ink-soft tabular-nums mr-1">{progressLabel}</span>
+          {visibleSteps.map((s, i) => (
+            <span
+              key={s.id}
+              className={`h-[4px] flex-1 rounded-full ${i < currentIndex ? 'bg-shutter' : 'bg-stone-line'}`}
+            />
+          ))}
         </div>
       </div>
 
-      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 space-y-4">
-        <p className="text-lg font-medium leading-snug">
+      <div className="rounded-2xl border border-stone-line bg-surface p-5 space-y-4 shadow-sm">
+        <p className="font-display font-bold text-lg leading-snug">
           <span className="mr-2">{currentStep.emoji}</span>
           {currentStep.label}
         </p>
 
         {currentStep.kind === 'handoff-check' && (
           <div className="space-y-2">
-            {handoffItems.length === 0 && <p className="text-sm text-slate-400">Nessun oggetto segnalato da portare.</p>}
+            {handoffItems.length === 0 && <p className="text-sm text-stone">Nessun oggetto segnalato da portare.</p>}
             {handoffItems.map((item) => (
               <div
                 key={item.id}
-                className="flex items-center justify-between rounded-lg border border-amber-300 bg-amber-50 dark:bg-amber-950/40 dark:border-amber-800 px-3 py-2 text-sm"
+                className="flex items-center justify-between rounded-lg border border-terracotta/35 bg-terracotta/10 px-3 py-2 text-sm"
               >
                 <span>{item.descrizione}</span>
                 <button
@@ -196,7 +206,7 @@ export default function ChecklistWizardPage() {
                     await markHandoffDelivered(item.id)
                     setHandoffItems((prev) => prev.filter((i) => i.id !== item.id))
                   }}
-                  className="text-xs rounded-md bg-white dark:bg-slate-900 border border-amber-400 px-2 py-1"
+                  className="text-xs rounded-md bg-surface border border-terracotta/50 px-2 py-1"
                 >
                   Consegnato
                 </button>
@@ -204,7 +214,7 @@ export default function ChecklistWizardPage() {
             ))}
             <button
               onClick={() => completeStep(currentStep.id, 'controllato')}
-              className="w-full rounded-lg bg-teal-700 text-white font-medium py-2.5"
+              className="w-full rounded-lg bg-shutter text-white font-semibold py-2.5"
             >
               Continua
             </button>
@@ -214,23 +224,23 @@ export default function ChecklistWizardPage() {
         {currentStep.kind === 'shared-task' && (
           <div className="space-y-3">
             {sharedState?.fatto ? (
-              <p className="text-sm rounded-lg bg-green-50 dark:bg-green-950/40 text-green-700 dark:text-green-300 px-3 py-2">
+              <p className="text-sm rounded-lg bg-success/10 text-success px-3 py-2">
                 ✅ Già fatta (dall’altro alloggio o in precedenza)
               </p>
             ) : (
-              <p className="text-sm text-slate-500 dark:text-slate-400">Non ancora segnata come fatta quest’anno.</p>
+              <p className="text-sm text-ink-soft">Non ancora segnata come fatta quest’anno.</p>
             )}
             <button
               onClick={handleSharedTaskDone}
               disabled={sharedState?.fatto}
-              className="w-full rounded-lg bg-teal-700 text-white font-medium py-2.5 disabled:opacity-50"
+              className="w-full rounded-lg bg-shutter text-white font-semibold py-2.5 disabled:opacity-50"
             >
               {sharedState?.fatto ? 'Già fatta — continua' : 'Segna come fatta'}
             </button>
             {sharedState?.fatto && (
               <button
                 onClick={() => completeStep(currentStep.id, 'gia-fatta')}
-                className="w-full rounded-lg border border-teal-600 text-teal-700 dark:text-teal-400 font-medium py-2.5"
+                className="w-full rounded-lg border border-shutter text-shutter font-semibold py-2.5"
               >
                 Continua
               </button>
@@ -244,7 +254,7 @@ export default function ChecklistWizardPage() {
               <button
                 key={opt.value}
                 onClick={() => completeStep(currentStep.id, opt.value, pendingFoto)}
-                className="rounded-lg border border-teal-600 text-teal-700 dark:text-teal-400 font-medium py-2.5"
+                className="rounded-lg border border-shutter text-shutter font-semibold py-2.5"
               >
                 {opt.label}
               </button>
@@ -258,7 +268,7 @@ export default function ChecklistWizardPage() {
               <button
                 key={opt.value}
                 onClick={() => completeStep(currentStep.id, opt.value)}
-                className="rounded-lg border border-teal-600 text-teal-700 dark:text-teal-400 font-medium py-2.5"
+                className="rounded-lg border border-shutter text-shutter font-semibold py-2.5"
               >
                 {opt.label}
               </button>
@@ -272,11 +282,11 @@ export default function ChecklistWizardPage() {
               value={freeTextValue}
               onChange={(e) => setFreeTextValue(e.target.value)}
               placeholder="Es. detersivo piatti (lascia vuoto se nulla)"
-              className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm"
+              className="w-full rounded-lg border border-stone-line bg-surface px-3 py-2 text-sm"
             />
             <button
               onClick={() => completeStep(currentStep.id, freeTextValue.trim() || 'nulla')}
-              className="w-full rounded-lg bg-teal-700 text-white font-medium py-2.5"
+              className="w-full rounded-lg bg-shutter text-white font-semibold py-2.5"
             >
               Continua
             </button>
@@ -286,7 +296,7 @@ export default function ChecklistWizardPage() {
         {(currentStep.kind === 'confirm' || currentStep.kind === 'info') && (
           <div className="space-y-3">
             {currentStep.kind === 'confirm' && (
-              <label className="block text-sm text-slate-500 dark:text-slate-400">
+              <label className="block text-sm text-ink-soft">
                 📷 Foto facoltativa (promemoria personale)
                 <input
                   type="file"
@@ -302,7 +312,7 @@ export default function ChecklistWizardPage() {
             )}
             <button
               onClick={() => completeStep(currentStep.id, null, pendingFoto)}
-              className="w-full rounded-lg bg-teal-700 text-white font-medium py-2.5"
+              className="w-full rounded-lg bg-shutter text-white font-semibold py-2.5"
             >
               {currentStep.kind === 'info' ? 'Avanti' : 'Fatto ✅'}
             </button>
@@ -311,7 +321,7 @@ export default function ChecklistWizardPage() {
       </div>
 
       {currentIndex > 0 && (
-        <button onClick={handleBack} className="text-sm text-slate-400">
+        <button onClick={handleBack} className="text-sm text-stone">
           ← torna allo step precedente
         </button>
       )}

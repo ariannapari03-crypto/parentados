@@ -5,6 +5,11 @@ import { listBookings, listIssues } from '../lib/repo'
 import { useFamily } from '../context/FamilyContext'
 import { bookingStatus, currentOrNextBooking, formatDateRange } from '../lib/dateUtils'
 
+const STATUS_TAG_COLOR: Record<string, string> = {
+  'in-corso': 'var(--color-success)',
+  futuro: 'var(--color-terracotta)',
+}
+
 export default function HomePage() {
   const { members } = useFamily()
   const { data: bookings, loading } = useRealtimeQuery('bookings', () => listBookings(), [])
@@ -20,41 +25,50 @@ export default function HomePage() {
       {openIssues.length > 0 && (
         <Link
           to="/guasti"
-          className="block rounded-xl border border-red-300 bg-red-50 dark:bg-red-950/40 dark:border-red-800 px-4 py-3 text-red-800 dark:text-red-200"
+          className="flex items-center gap-2 rounded-xl border border-danger/35 bg-danger/10 px-4 py-3 text-danger font-medium"
         >
-          🛠️ <strong>{openIssues.length}</strong> {openIssues.length === 1 ? 'guasto aperto' : 'guasti aperti'} da vedere
+          🛠️ <strong className="font-mono">{openIssues.length}</strong>{' '}
+          {openIssues.length === 1 ? 'guasto aperto' : 'guasti aperti'} da vedere
         </Link>
       )}
 
       <div>
-        <h1 className="text-xl font-bold mb-3">Le nostre case</h1>
+        <p className="font-mono text-[11px] font-bold uppercase tracking-widest text-stone mb-2">Le nostre case</p>
         <div className="space-y-3">
           {HOUSES.map((house) => {
             const houseBookings = bookings?.filter((b) => b.houseId === house.id) ?? []
             const relevant = currentOrNextBooking(houseBookings)
             const status = relevant ? bookingStatus(relevant) : null
+            const tagColor = (status && STATUS_TAG_COLOR[status]) || 'var(--color-stone-line)'
             return (
               <Link
                 key={house.id}
                 to={`/case/${house.slug}`}
-                className="block rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3"
+                className="relative block rounded-2xl border border-stone-line bg-surface pl-5 pr-4 py-3.5 overflow-hidden"
               >
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold">{house.nome}</span>
+                <span
+                  className="absolute left-0 top-3.5 bottom-3.5 w-[5px] rounded-full"
+                  style={{ background: tagColor }}
+                />
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-display font-bold text-[16.5px]">{house.nome}</span>
                   {house.accessoRiservato && (
-                    <span className="text-[11px] uppercase tracking-wide text-amber-600">accesso riservato</span>
+                    <span className="font-mono text-[10px] font-bold uppercase tracking-wide text-warning shrink-0">
+                      🔑 adulto richiesto
+                    </span>
                   )}
                 </div>
-                {loading && <p className="text-sm text-slate-400 mt-1">Caricamento...</p>}
+                {loading && <p className="text-sm text-stone mt-1">Caricamento...</p>}
                 {!loading && relevant && (
-                  <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-                    {status === 'in-corso' ? '🟢 In corso: ' : '📅 Prossimo: '}
-                    {formatDateRange(relevant.dataInizio, relevant.dataFine)} — {relevant.partecipanti.map(memberName).join(', ')}
+                  <p className="text-sm text-ink-soft mt-1 tabular-nums">
+                    {status === 'in-corso' ? 'in corso' : 'prossimo'} ·{' '}
+                    <span className="font-mono font-medium text-ink">
+                      {formatDateRange(relevant.dataInizio, relevant.dataFine)}
+                    </span>{' '}
+                    · {relevant.partecipanti.map(memberName).join(', ')}
                   </p>
                 )}
-                {!loading && !relevant && (
-                  <p className="text-sm text-slate-400 mt-1">Nessun soggiorno programmato</p>
-                )}
+                {!loading && !relevant && <p className="text-sm text-stone mt-1">Nessun soggiorno programmato</p>}
               </Link>
             )
           })}

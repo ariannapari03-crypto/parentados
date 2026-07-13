@@ -1,16 +1,18 @@
-import type { House } from '../types/domain'
+import type { ChecklistFlow, House } from '../types/domain'
 import type { ChecklistCtx, StepDef } from './checklistTypes'
 import * as b from './checklistBuilders'
+
+function sanBartolomeoPrePartenza(): StepDef[] {
+  return [b.reminderChiavi(true), b.controllaOggettiDaPortare()]
+}
 
 function sanBartolomeoApertura(ctx: ChecklistCtx): StepDef[] {
   if (ctx.stagione === 'estate' && ctx.inizioStagione) {
     return [
-      b.reminderChiavi(true),
-      b.controllaOggettiDaPortare(),
       b.puliziaCasa(),
       b.apriAcqua(),
       b.apriLuce(),
-      b.chiudiFrigoFreezer(),
+      b.accendiFrigoFreezer(),
       b.scopriMobili(),
       b.faiLetti(),
       b.avviaDeumidificatore(),
@@ -18,14 +20,14 @@ function sanBartolomeoApertura(ctx: ChecklistCtx): StepDef[] {
     ]
   }
   if (ctx.stagione === 'estate' && !ctx.inizioStagione) {
-    return [b.reminderChiavi(true), b.controllaOggettiDaPortare(), b.apriAcqua(), b.avviaDeumidificatore()]
+    return [b.apriAcqua(), b.avviaDeumidificatore()]
   }
   // inverno
-  const steps: StepDef[] = [b.reminderChiavi(true), b.controllaOggettiDaPortare()]
+  const steps: StepDef[] = []
   if (ctx.inizioStagione) steps.push(b.puliziaCasa())
   steps.push(b.apriAcqua())
   if (ctx.inizioStagione) {
-    steps.push(b.apriLuce(), b.chiudiFrigoFreezer(), b.scopriMobili(), b.faiLetti())
+    steps.push(b.apriLuce(), b.accendiFrigoFreezer(), b.scopriMobili(), b.faiLetti())
   }
   return steps
 }
@@ -55,11 +57,21 @@ function sanBartolomeoChiusura(ctx: ChecklistCtx): StepDef[] {
   return steps
 }
 
+function limonePrePartenza(ctx: ChecklistCtx): StepDef[] {
+  if (ctx.stagione === 'inverno') {
+    return [
+      b.avvisaZioRikiTermosifoni(),
+      b.reminderChiaviTelecomandoGarage(),
+      b.controllaOggettiDaPortare(),
+      b.attivaTermosifoniRemoto(),
+    ]
+  }
+  return [b.reminderChiaviTelecomandoGarage(), b.controllaOggettiDaPortare()]
+}
+
 function limoneApertura(ctx: ChecklistCtx): StepDef[] {
   if (ctx.stagione === 'estate' && ctx.inizioStagione) {
     return [
-      b.reminderChiaviTelecomandoGarage(),
-      b.controllaOggettiDaPortare(),
       b.apriGas(),
       b.apriLuce(),
       b.apriBoiler(),
@@ -67,7 +79,7 @@ function limoneApertura(ctx: ChecklistCtx): StepDef[] {
       b.puliziaCasa(),
       b.scopriMobili(),
       b.faiLetti(),
-      b.chiudiFrigoFreezer(),
+      b.accendiFrigoFreezer(),
       {
         id: 'erbacce-terrazzo-shared',
         kind: 'shared-task',
@@ -79,21 +91,17 @@ function limoneApertura(ctx: ChecklistCtx): StepDef[] {
     ]
   }
   if (ctx.stagione === 'estate' && !ctx.inizioStagione) {
-    return [b.reminderChiaviTelecomandoGarage(), b.controllaOggettiDaPortare(), b.apriAcquaSemplice()]
+    return [b.apriAcquaSemplice()]
   }
   // inverno — si applica ad ogni soggiorno
   return [
-    b.avvisaZioRikiTermosifoni(),
-    b.reminderChiaviTelecomandoGarage(),
-    b.controllaOggettiDaPortare(),
-    b.attivaTermosifoniRemoto(),
     b.apriGas(),
     b.apriLuce(),
     b.apriBoiler(),
     b.apriAcquaSemplice(),
     b.verificaTermosifoni(),
     b.puliziaCasa(),
-    b.chiudiFrigoFreezer(),
+    b.accendiFrigoFreezer(),
     b.scopriMobili(),
     b.faiLetti(),
   ]
@@ -125,15 +133,12 @@ function limoneChiusura(ctx: ChecklistCtx): StepDef[] {
   return steps
 }
 
+function sanremoPrePartenza(): StepDef[] {
+  return [b.reminderChiavi(false), b.controllaOggettiDaPortare()]
+}
+
 function sanremoApertura(): StepDef[] {
-  return [
-    b.reminderChiavi(false),
-    b.controllaOggettiDaPortare(),
-    b.apriAcqua(),
-    b.apriLuce(),
-    b.chiudiFrigoFreezer(),
-    b.faiLetti(),
-  ]
+  return [b.apriAcquaSemplice(), b.apriLuce(), b.accendiFrigoFreezer(), b.faiLetti()]
 }
 
 function sanremoChiusura(): StepDef[] {
@@ -149,14 +154,17 @@ function sanremoChiusura(): StepDef[] {
   ]
 }
 
-export function getChecklistSteps(house: House, flow: 'apertura' | 'chiusura', ctx: ChecklistCtx): StepDef[] {
+export function getChecklistSteps(house: House, flow: ChecklistFlow, ctx: ChecklistCtx): StepDef[] {
   if (house.genericChecklist) {
+    if (flow === 'pre-partenza') return sanremoPrePartenza()
     return flow === 'apertura' ? sanremoApertura() : sanremoChiusura()
   }
   if (house.slug === 'san-bartolomeo') {
+    if (flow === 'pre-partenza') return sanBartolomeoPrePartenza()
     return flow === 'apertura' ? sanBartolomeoApertura(ctx) : sanBartolomeoChiusura(ctx)
   }
   if (house.slug === 'limone-3' || house.slug === 'limone-9') {
+    if (flow === 'pre-partenza') return limonePrePartenza(ctx)
     return flow === 'apertura' ? limoneApertura(ctx) : limoneChiusura(ctx)
   }
   return []

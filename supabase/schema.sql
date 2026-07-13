@@ -32,7 +32,7 @@ create index if not exists bookings_house_id_idx on bookings (house_id);
 create table if not exists checklist_states (
   id uuid primary key default gen_random_uuid(),
   booking_id uuid not null references bookings(id) on delete cascade,
-  flow text not null check (flow in ('apertura', 'chiusura')),
+  flow text not null check (flow in ('pre-partenza', 'apertura', 'chiusura')),
   steps jsonb not null default '{}',
   completato_quando timestamptz,
   unique (booking_id, flow)
@@ -118,3 +118,11 @@ alter publication supabase_realtime add table shared_task_states;
 -- alter table handoff_items drop constraint handoff_items_booking_origine_id_fkey;
 -- alter table handoff_items add constraint handoff_items_booking_origine_id_fkey
 --   foreign key (booking_origine_id) references bookings(id) on delete set null;
+
+-- Migrazione: aggiunto il flusso "pre-partenza" (chiavi, oggetti da
+-- portare, ecc. separati dall'apertura vera e propria in casa). Esegui
+-- questo blocco una tantum se il tuo progetto e' stato creato prima:
+--
+-- alter table checklist_states drop constraint checklist_states_flow_check;
+-- alter table checklist_states add constraint checklist_states_flow_check
+--   check (flow in ('pre-partenza', 'apertura', 'chiusura'));

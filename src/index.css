@@ -1,7 +1,47 @@
 @import "tailwindcss";
 
+@theme {
+  --font-display: ui-rounded, "SF Pro Rounded", "Segoe UI Rounded", system-ui, sans-serif;
+  --font-sans: -apple-system, "Segoe UI", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  --color-bg: #edf1ea;
+  --color-surface: #fffefa;
+  --color-surface-2: #f6f4ec;
+  --color-ink: #1c231e;
+  --color-ink-soft: #4b5248;
+  --color-shutter: #2b5c4c;
+  --color-shutter-dark: #163027;
+  --color-terracotta: #c4622c;
+  --color-stone: #8a8b7e;
+  --color-stone-line: #dcdccd;
+  --color-sea: #3e6e82;
+  --color-success: #3e7a5f;
+  --color-warning: #b8862e;
+  --color-danger: #a63b2e;
+}
+
 :root {
   color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #141912;
+    --color-surface: #1b221b;
+    --color-surface-2: #212920;
+    --color-ink: #ede9d8;
+    --color-ink-soft: #b7bcac;
+    --color-shutter: #5fa98c;
+    --color-shutter-dark: #dff2ea;
+    --color-terracotta: #e2884f;
+    --color-stone: #8b9184;
+    --color-stone-line: #333b30;
+    --color-sea: #6fa7be;
+    --color-success: #58a37e;
+    --color-warning: #d2a24c;
+    --color-danger: #d2634c;
+  }
 }
 
 html, body, #root {
@@ -12,7 +52,9 @@ body {
   margin: 0;
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior-y: contain;
-  font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-ink);
 }
 
 #root {
@@ -23,4 +65,8 @@ body {
 
 * {
   -webkit-font-smoothing: antialiased;
+}
+
+.font-variant-tabular {
+  font-variant-numeric: tabular-nums;
 }

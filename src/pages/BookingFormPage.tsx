@@ -83,7 +83,7 @@ export default function BookingFormPage() {
 
   return (
     <div className="space-y-5">
-      <h1 className="text-xl font-bold">Prenota — {house.nome}</h1>
+      <h1 className="font-display font-extrabold text-xl">Prenota — {house.nome}</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-2 gap-3">
@@ -93,7 +93,7 @@ export default function BookingFormPage() {
               type="date"
               value={dataInizio}
               onChange={(e) => setDataInizio(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2"
+              className="mt-1 w-full rounded-lg border border-stone-line bg-surface px-3 py-2 font-mono tabular-nums"
               required
             />
           </label>
@@ -103,7 +103,7 @@ export default function BookingFormPage() {
               type="date"
               value={dataFine}
               onChange={(e) => setDataFine(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2"
+              className="mt-1 w-full rounded-lg border border-stone-line bg-surface px-3 py-2 font-mono tabular-nums"
               required
             />
           </label>
@@ -116,14 +116,14 @@ export default function BookingFormPage() {
               <button
                 type="button"
                 onClick={() => setStagioneOverride('estate')}
-                className={`flex-1 rounded-lg border px-3 py-2 ${stagione === 'estate' ? 'border-teal-600 bg-teal-50 dark:bg-teal-950' : 'border-slate-300 dark:border-slate-700'}`}
+                className={`flex-1 rounded-lg border px-3 py-2 ${stagione === 'estate' ? 'border-shutter bg-shutter/10' : 'border-stone-line'}`}
               >
                 ☀️ Estate
               </button>
               <button
                 type="button"
                 onClick={() => setStagioneOverride('inverno')}
-                className={`flex-1 rounded-lg border px-3 py-2 ${stagione === 'inverno' ? 'border-teal-600 bg-teal-50 dark:bg-teal-950' : 'border-slate-300 dark:border-slate-700'}`}
+                className={`flex-1 rounded-lg border px-3 py-2 ${stagione === 'inverno' ? 'border-shutter bg-shutter/10' : 'border-stone-line'}`}
               >
                 ❄️ Inverno
               </button>
@@ -154,7 +154,7 @@ export default function BookingFormPage() {
             {members.map((m) => (
               <label
                 key={m.id}
-                className="flex items-center gap-2 rounded-lg border border-slate-200 dark:border-slate-800 px-3 py-2 text-sm"
+                className="flex items-center gap-2 rounded-lg border border-stone-line px-3 py-2 text-sm"
               >
                 <input type="checkbox" checked={partecipanti.includes(m.id)} onChange={() => toggleMember(m.id)} />
                 {m.ruolo === 'adulto' ? '🧑' : '🧒'} {m.nome}
@@ -162,18 +162,16 @@ export default function BookingFormPage() {
             ))}
           </div>
           {house.accessoRiservato && (
-            <p className="text-xs text-amber-600 mt-1">
-              ⚠️ Serve almeno un adulto tra i partecipanti per prenotare Sanremo.
-            </p>
+            <p className="text-xs text-warning mt-1">⚠️ Serve almeno un adulto tra i partecipanti per prenotare Sanremo.</p>
           )}
         </div>
 
-        {error && <p className="text-sm text-red-600 bg-red-50 dark:bg-red-950/40 rounded-lg px-3 py-2">{error}</p>}
+        {error && <p className="text-sm text-danger bg-danger/10 rounded-lg px-3 py-2">{error}</p>}
 
         <button
           type="submit"
           disabled={submitting}
-          className="w-full rounded-lg bg-teal-700 text-white font-medium py-2.5 disabled:opacity-50"
+          className="w-full rounded-lg bg-shutter text-white font-semibold py-2.5 disabled:opacity-50"
         >
           {submitting ? 'Salvataggio...' : 'Crea soggiorno'}
         </button>

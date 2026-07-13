@@ -1,14 +1,23 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFamily } from '../context/FamilyContext'
-import type { Ruolo } from '../types/domain'
+import ConfirmDialog from '../components/ConfirmDialog'
+import type { FamilyMember, Ruolo } from '../types/domain'
 
 export default function ProfilePage() {
   const { members, loading, error, currentMember, setCurrentMemberId, createMember, deleteMember } = useFamily()
   const [nome, setNome] = useState('')
   const [ruolo, setRuolo] = useState<Ruolo>('adulto')
   const [submitting, setSubmitting] = useState(false)
+  const [pendingMember, setPendingMember] = useState<FamilyMember | null>(null)
   const navigate = useNavigate()
+
+  function confirmSelection() {
+    if (!pendingMember) return
+    setCurrentMemberId(pendingMember.id)
+    setPendingMember(null)
+    navigate('/')
+  }
 
   async function handleAdd(e: React.FormEvent) {
     e.preventDefault()
@@ -25,32 +34,29 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-svh bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 px-4 py-6 max-w-xl mx-auto">
-      <h1 className="text-2xl font-bold mb-1 flex items-center gap-2">🏡 Case Famiglia</h1>
-      <p className="text-slate-500 dark:text-slate-400 mb-6">Chi sei? Scegli il tuo nome dalla lista.</p>
+    <div className="min-h-svh bg-bg text-ink font-sans px-4 py-6 max-w-xl mx-auto">
+      <h1 className="font-display font-extrabold text-2xl mb-1 flex items-center gap-2 text-shutter">
+        🏡 Case Famiglia
+      </h1>
+      <p className="text-ink-soft mb-6">Chi sei? Scegli il tuo nome dalla lista.</p>
 
-      {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
-      {loading && <p className="text-slate-400 text-sm mb-4">Caricamento...</p>}
+      {error && <p className="text-danger text-sm mb-4">{error}</p>}
+      {loading && <p className="text-stone text-sm mb-4">Caricamento...</p>}
 
       <ul className="space-y-2 mb-6">
         {members.map((m) => (
           <li key={m.id}>
             <button
-              onClick={() => {
-                setCurrentMemberId(m.id)
-                navigate('/')
-              }}
+              onClick={() => setPendingMember(m)}
               className={`w-full flex items-center justify-between rounded-xl border px-4 py-3 text-left transition ${
-                currentMember?.id === m.id
-                  ? 'border-teal-600 bg-teal-50 dark:bg-teal-950'
-                  : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900'
+                currentMember?.id === m.id ? 'border-shutter bg-shutter/10' : 'border-stone-line bg-surface'
               }`}
             >
               <span className="font-medium">
                 {m.ruolo === 'adulto' ? '🧑' : '🧒'} {m.nome}
               </span>
               <span className="flex items-center gap-3">
-                <span className="text-xs uppercase tracking-wide text-slate-400">{m.ruolo}</span>
+                <span className="font-mono text-[11px] uppercase tracking-wide text-stone">{m.ruolo}</span>
                 <span
                   role="button"
                   tabIndex={0}
@@ -58,7 +64,7 @@ export default function ProfilePage() {
                     e.stopPropagation()
                     if (confirm(`Rimuovere ${m.nome} dalla famiglia?`)) deleteMember(m.id)
                   }}
-                  className="text-slate-400 hover:text-red-600"
+                  className="text-stone hover:text-danger"
                 >
                   ✕
                 </span>
@@ -67,30 +73,30 @@ export default function ProfilePage() {
           </li>
         ))}
         {!loading && members.length === 0 && (
-          <p className="text-sm text-slate-400">Nessun membro ancora. Aggiungine uno qui sotto.</p>
+          <p className="text-sm text-stone">Nessun membro ancora. Aggiungine uno qui sotto.</p>
         )}
       </ul>
 
-      <form onSubmit={handleAdd} className="space-y-3 border-t border-slate-200 dark:border-slate-800 pt-5">
-        <h2 className="font-semibold">Aggiungi un membro della famiglia</h2>
+      <form onSubmit={handleAdd} className="space-y-3 border-t border-stone-line pt-5">
+        <h2 className="font-display font-bold">Aggiungi un membro della famiglia</h2>
         <input
           value={nome}
           onChange={(e) => setNome(e.target.value)}
           placeholder="Nome"
-          className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2"
+          className="w-full rounded-lg border border-stone-line bg-surface px-3 py-2"
         />
         <div className="flex gap-2">
           <button
             type="button"
             onClick={() => setRuolo('adulto')}
-            className={`flex-1 rounded-lg border px-3 py-2 ${ruolo === 'adulto' ? 'border-teal-600 bg-teal-50 dark:bg-teal-950' : 'border-slate-300 dark:border-slate-700'}`}
+            className={`flex-1 rounded-lg border px-3 py-2 ${ruolo === 'adulto' ? 'border-shutter bg-shutter/10' : 'border-stone-line'}`}
           >
             🧑 Adulto
           </button>
           <button
             type="button"
             onClick={() => setRuolo('nipote')}
-            className={`flex-1 rounded-lg border px-3 py-2 ${ruolo === 'nipote' ? 'border-teal-600 bg-teal-50 dark:bg-teal-950' : 'border-slate-300 dark:border-slate-700'}`}
+            className={`flex-1 rounded-lg border px-3 py-2 ${ruolo === 'nipote' ? 'border-shutter bg-shutter/10' : 'border-stone-line'}`}
           >
             🧒 Nipote
           </button>
@@ -98,11 +104,19 @@ export default function ProfilePage() {
         <button
           type="submit"
           disabled={submitting || !nome.trim()}
-          className="w-full rounded-lg bg-teal-700 text-white font-medium py-2.5 disabled:opacity-50"
+          className="w-full rounded-lg bg-shutter text-white font-semibold py-2.5 disabled:opacity-50"
         >
           Aggiungi e continua
         </button>
       </form>
+
+      <ConfirmDialog
+        open={pendingMember !== null}
+        title={`Stai selezionando il profilo: ${pendingMember?.nome ?? ''}`}
+        message="Confermare?"
+        onConfirm={confirmSelection}
+        onCancel={() => setPendingMember(null)}
+      />
     </div>
   )
 }

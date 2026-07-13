@@ -16,15 +16,15 @@ export default function Layout() {
   const openIssuesCount = issues?.filter((i) => i.stato === 'aperto').length ?? 0
 
   return (
-    <div className="flex flex-col min-h-svh bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-      <header className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur px-4 py-3">
-        <div className="flex items-center gap-2 font-semibold text-teal-700 dark:text-teal-400">
+    <div className="flex flex-col min-h-svh bg-bg text-ink font-sans">
+      <header className="sticky top-0 z-10 flex items-center justify-between border-b border-stone-line bg-surface/90 backdrop-blur px-4 py-3">
+        <div className="flex items-center gap-2 font-display font-bold text-shutter">
           <span className="text-xl">🏡</span>
           <span>Case Famiglia</span>
         </div>
         {currentMember && (
-          <span className="text-sm text-slate-500 dark:text-slate-400">
-            Ciao, <strong className="text-slate-700 dark:text-slate-200">{currentMember.nome}</strong>
+          <span className="text-sm text-ink-soft">
+            Ciao, <strong className="font-mono font-semibold text-ink">{currentMember.nome}</strong>
           </span>
         )}
       </header>
@@ -33,7 +33,7 @@ export default function Layout() {
         <Outlet />
       </main>
 
-      <nav className="fixed bottom-0 inset-x-0 z-10 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 pb-[env(safe-area-inset-bottom)]">
+      <nav className="fixed bottom-0 inset-x-0 z-10 border-t border-stone-line bg-surface pb-[env(safe-area-inset-bottom)]">
         <div className="mx-auto max-w-xl grid grid-cols-4">
           {navItems.map((item) => (
             <NavLink
@@ -41,20 +41,25 @@ export default function Layout() {
               to={item.to}
               end={item.to === '/'}
               className={({ isActive }) =>
-                `relative flex flex-col items-center gap-0.5 py-2 text-xs font-medium ${
-                  isActive ? 'text-teal-700 dark:text-teal-400' : 'text-slate-500 dark:text-slate-400'
+                `relative flex flex-col items-center gap-0.5 py-2 text-xs font-semibold ${
+                  isActive ? 'text-shutter' : 'text-stone'
                 }`
               }
             >
-              <span className="relative text-xl leading-none">
-                {item.emoji}
-                {item.to === '/guasti' && openIssuesCount > 0 && (
-                  <span className="absolute -top-1.5 -right-2.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-bold text-white">
-                    {openIssuesCount}
+              {({ isActive }) => (
+                <>
+                  {isActive && <span className="absolute -top-2 h-[3px] w-[22px] rounded-full bg-shutter" />}
+                  <span className="relative text-xl leading-none">
+                    {item.emoji}
+                    {item.to === '/guasti' && openIssuesCount > 0 && (
+                      <span className="absolute -top-1.5 -right-2.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-danger px-1 font-mono text-[10px] font-bold text-white">
+                        {openIssuesCount}
+                      </span>
+                    )}
                   </span>
-                )}
-              </span>
-              {item.label}
+                  {item.label}
+                </>
+              )}
             </NavLink>
           ))}
         </div>
