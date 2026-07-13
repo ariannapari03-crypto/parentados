@@ -47,7 +47,7 @@ create table if not exists handoff_items (
   data_segnalazione timestamptz not null default now(),
   stato text not null default 'da_portare' check (stato in ('da_portare', 'consegnato')),
   auto_generato boolean not null default false,
-  booking_origine_id uuid references bookings(id)
+  booking_origine_id uuid references bookings(id) on delete set null
 );
 
 create index if not exists handoff_items_house_id_idx on handoff_items (house_id);
@@ -108,3 +108,13 @@ alter publication supabase_realtime add table checklist_states;
 alter publication supabase_realtime add table handoff_items;
 alter publication supabase_realtime add table issues;
 alter publication supabase_realtime add table shared_task_states;
+
+-- Migrazione per progetti gia' esistenti creati prima di questa correzione:
+-- eliminare un soggiorno falliva silenziosamente se aveva generato un
+-- handoff item (es. lenzuola da riportare), perche' il vincolo non
+-- permetteva la cancellazione. Esegui questo blocco una tantum nello SQL
+-- editor se il tuo progetto e' stato creato con lo schema precedente:
+--
+-- alter table handoff_items drop constraint handoff_items_booking_origine_id_fkey;
+-- alter table handoff_items add constraint handoff_items_booking_origine_id_fkey
+--   foreign key (booking_origine_id) references bookings(id) on delete set null;

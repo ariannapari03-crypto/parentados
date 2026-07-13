@@ -23,6 +23,12 @@ export interface House {
   genericChecklist: boolean // Sanremo: checklist unica, no stagionalità
   accessoRiservato: boolean // Sanremo: nipote solo se c'è un adulto nello stesso periodo
   sharedTaskGroupId: string | null // es. "erbacce-limone" per Limone 3/9
+  infoGestione: HouseInfoSection[] // note pratiche fuori dalla checklist (gestione immondizia, impianti, ecc.)
+}
+
+export interface HouseInfoSection {
+  titolo: string
+  corpo: string
 }
 
 export interface Booking {

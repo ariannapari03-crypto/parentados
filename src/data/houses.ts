@@ -1,5 +1,12 @@
 import type { House } from '../types/domain'
 
+const LIMONE_INFO_GESTIONE = [
+  {
+    titolo: 'Termosifoni',
+    corpo: 'Da poco ci sono le valvole automatiche sui termosifoni.',
+  },
+]
+
 // Config statiche delle case di famiglia (spec sezione 5).
 export const HOUSES: House[] = [
   {
@@ -16,6 +23,13 @@ export const HOUSES: House[] = [
     genericChecklist: false,
     accessoRiservato: false,
     sharedTaskGroupId: null,
+    infoGestione: [
+      {
+        titolo: 'Gestione immondizia',
+        corpo:
+          'Prendi la tessera in ingresso. Ai bidoni: pulsante, appoggia la carta, pedale e butta. Sacco grigio per l’indifferenziata, sacchetto biodegradabile per l’umido, sacchetto qualsiasi per plastica/carta/vetro.',
+      },
+    ],
   },
   {
     id: 'limone-3',
@@ -31,6 +45,7 @@ export const HOUSES: House[] = [
     genericChecklist: false,
     accessoRiservato: false,
     sharedTaskGroupId: 'erbacce-limone',
+    infoGestione: LIMONE_INFO_GESTIONE,
   },
   {
     id: 'limone-9',
@@ -46,6 +61,7 @@ export const HOUSES: House[] = [
     genericChecklist: false,
     accessoRiservato: false,
     sharedTaskGroupId: 'erbacce-limone',
+    infoGestione: LIMONE_INFO_GESTIONE,
   },
   {
     id: 'sanremo',
@@ -61,6 +77,7 @@ export const HOUSES: House[] = [
     genericChecklist: true,
     accessoRiservato: true,
     sharedTaskGroupId: null,
+    infoGestione: [],
   },
 ]
 

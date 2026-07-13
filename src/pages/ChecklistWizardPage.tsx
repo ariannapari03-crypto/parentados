@@ -181,11 +181,6 @@ export default function ChecklistWizardPage() {
           <span className="mr-2">{currentStep.emoji}</span>
           {currentStep.label}
         </p>
-        {currentStep.assunto && (
-          <p className="text-xs text-amber-600">
-            ⚠️ Passaggio assunto per coerenza, non ancora confermato: verifica sul posto.
-          </p>
-        )}
 
         {currentStep.kind === 'handoff-check' && (
           <div className="space-y-2">

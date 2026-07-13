@@ -25,8 +25,6 @@ export interface StepDef {
   /** Effetto collaterale da eseguire quando lo step viene completato */
   effect?: 'create-handoff-lenzuola'
   freeText?: boolean
-  /** Assunzione fatta per coerenza ma non esplicitamente confermata dall'utente (vedi spec, legenda [DA CONFERMARE]) */
-  assunto?: boolean
   /** Per kind === 'shared-task': gruppo di case che condividono questa task (es. erbacce-limone) */
   sharedTaskGroupId?: string
 }

@@ -29,8 +29,17 @@ function HouseConfigBadges({ house }: { house: ReturnType<typeof getHouseBySlug>
   )
 }
 
-function BookingRow({ booking, houseSlug }: { booking: Booking; houseSlug: string }) {
+function BookingRow({
+  booking,
+  houseSlug,
+  onDeleted,
+}: {
+  booking: Booking
+  houseSlug: string
+  onDeleted: () => void
+}) {
   const { members } = useFamily()
+  const [deleting, setDeleting] = useState(false)
   const status = bookingStatus(booking)
   const partecipanti = booking.partecipanti.map((id) => members.find((m) => m.id === id)?.nome ?? '—').join(', ')
 
@@ -69,12 +78,24 @@ function BookingRow({ booking, houseSlug }: { booking: Booking; houseSlug: strin
           Chiusura
         </Link>
         <button
-          onClick={() => {
-            if (confirm('Eliminare questo soggiorno?')) deleteBooking(booking.id)
+          onClick={async () => {
+            if (!confirm('Eliminare questo soggiorno?')) return
+            setDeleting(true)
+            try {
+              await deleteBooking(booking.id)
+              onDeleted()
+            } catch (err) {
+              alert(
+                `Non sono riuscito a eliminare il soggiorno: ${err instanceof Error ? err.message : 'errore sconosciuto'}`,
+              )
+            } finally {
+              setDeleting(false)
+            }
           }}
-          className="text-sm text-slate-400 hover:text-red-600 px-2"
+          disabled={deleting}
+          className="text-sm text-slate-400 hover:text-red-600 px-2 disabled:opacity-50"
         >
-          ✕
+          {deleting ? '…' : '✕'}
         </button>
       </div>
       <span className="hidden">{houseSlug}</span>
@@ -115,11 +136,11 @@ function HistoryEntry({ booking }: { booking: Booking }) {
 export default function HouseDetailPage() {
   const { slug } = useParams<{ slug: string }>()
   const house = getHouseBySlug(slug ?? '')
-  const { data: bookings, loading } = useRealtimeQuery(
-    'bookings',
-    () => (house ? listBookingsForHouse(house.id) : Promise.resolve([])),
-    [house?.id],
-  )
+  const {
+    data: bookings,
+    loading,
+    refresh: refreshBookings,
+  } = useRealtimeQuery('bookings', () => (house ? listBookingsForHouse(house.id) : Promise.resolve([])), [house?.id])
   const { data: handoff, refresh: refreshHandoff } = useRealtimeQuery(
     'handoff_items',
     () => (house ? listHandoffItems(house.id) : Promise.resolve([])),
@@ -144,6 +165,20 @@ export default function HouseDetailPage() {
           </p>
         )}
       </div>
+
+      {house.infoGestione.length > 0 && (
+        <details className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3">
+          <summary className="font-semibold cursor-pointer">ℹ️ Informazioni di gestione</summary>
+          <div className="mt-3 space-y-3">
+            {house.infoGestione.map((sezione) => (
+              <div key={sezione.titolo}>
+                <p className="text-sm font-medium">{sezione.titolo}</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">{sezione.corpo}</p>
+              </div>
+            ))}
+          </div>
+        </details>
+      )}
 
       <Link
         to={`/case/${house.slug}/prenota`}
@@ -185,7 +220,7 @@ export default function HouseDetailPage() {
         {!loading && upcoming.length === 0 && <p className="text-sm text-slate-400">Nessun soggiorno in programma.</p>}
         <ul className="space-y-2">
           {upcoming.map((b) => (
-            <BookingRow key={b.id} booking={b} houseSlug={house.slug} />
+            <BookingRow key={b.id} booking={b} houseSlug={house.slug} onDeleted={refreshBookings} />
           ))}
         </ul>
       </div>

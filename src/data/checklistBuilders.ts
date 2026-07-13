@@ -1,13 +1,21 @@
 import type { StepDef } from './checklistTypes'
 
-export function reminderChiavi(garage: boolean, telecomando = false): StepDef {
+export function reminderChiavi(garage: boolean): StepDef {
   return {
     id: 'reminder-chiavi',
     kind: 'confirm',
     emoji: '🔑',
-    label: garage
-      ? `Prendi le chiavi (compresa quella del garage${telecomando ? ' + telecomando' : ''})`
-      : 'Prendi le chiavi',
+    label: garage ? 'Prendi le chiavi (compresa quella del garage)' : 'Prendi le chiavi',
+  }
+}
+
+/** Limone: chiave di casa normale, il garage si apre col telecomando (non con una chiave a parte). */
+export function reminderChiaviTelecomandoGarage(): StepDef {
+  return {
+    id: 'reminder-chiavi',
+    kind: 'confirm',
+    emoji: '🔑',
+    label: 'Prendi le chiavi di casa + il telecomando del garage',
   }
 }
 
@@ -30,6 +38,11 @@ export function apriAcqua(): StepDef {
   }
 }
 
+/** Limone: niente leve specifiche come al mare, è solo un rubinetto/valvola generica. */
+export function apriAcquaSemplice(): StepDef {
+  return { id: 'apertura-acqua', kind: 'confirm', emoji: '🚰', label: 'Apertura acqua' }
+}
+
 export function chiudiAcqua(): StepDef {
   return {
     id: 'chiusura-acqua',
@@ -47,8 +60,8 @@ export function chiudiLuce(): StepDef {
   return { id: 'chiusura-luce', kind: 'confirm', emoji: '💡', label: 'Chiudi la luce' }
 }
 
-export function apriGas(assunto = false): StepDef {
-  return { id: 'apertura-gas', kind: 'confirm', emoji: '🔥', label: 'Apertura gas', assunto }
+export function apriGas(): StepDef {
+  return { id: 'apertura-gas', kind: 'confirm', emoji: '🔥', label: 'Apertura gas' }
 }
 
 export function chiudiGas(): StepDef {
@@ -102,6 +115,15 @@ export function rimuoviErbacce(): StepDef {
     kind: 'confirm',
     emoji: '🌿',
     label: 'Rimuovi le erbacce dal terrazzo condiviso (task condivisa: fatta qui, risulta fatta anche nell’altro alloggio)',
+  }
+}
+
+export function avvisaZioRikiTermosifoni(): StepDef {
+  return {
+    id: 'avvisa-zio-riki',
+    kind: 'confirm',
+    emoji: '📞',
+    label: 'Di’ a zio Riki di accendere i termosifoni',
   }
 }
 
@@ -187,11 +209,16 @@ export function lenzuolaBranch(): StepDef[] {
   ]
 }
 
-export function ritiraRobaStesa(): StepDef {
+export function ritiraRobaStesaMare(): StepDef {
   return { id: 'ritira-roba-stesa', kind: 'confirm', emoji: '👙', label: 'Ritira la roba stesa (costumi, teli mare)' }
 }
 
-export function differenziata(): StepDef {
+/** Limone: niente costumi/teli mare, è montagna. */
+export function ritiraRobaStesaMontagna(): StepDef {
+  return { id: 'ritira-roba-stesa', kind: 'confirm', emoji: '🧦', label: 'Ritira la roba stesa' }
+}
+
+export function differenziataMare(): StepDef {
   return {
     id: 'differenziata',
     kind: 'confirm',
@@ -199,6 +226,11 @@ export function differenziata(): StepDef {
     label:
       'Differenziata: prendi la tessera in ingresso, ai bidoni pulsante + appoggia carta + pedale e butta — sacco grigio indifferenziata, sacchetto biodegradabile umido, sacchetto qualsiasi plastica/carta/vetro',
   }
+}
+
+/** Limone: niente tessera né codice colori dei sacchi (vedi le Informazioni di gestione della casa). */
+export function differenziataMontagna(): StepDef {
+  return { id: 'differenziata', kind: 'confirm', emoji: '♻️', label: 'Porta giù la differenziata ai bidoni' }
 }
 
 export function ritiraBidoni(): StepDef {
@@ -211,6 +243,11 @@ export function puliziaBagno(): StepDef {
 
 export function passaFufi(): StepDef {
   return { id: 'passa-fufi', kind: 'confirm', emoji: '🤖', label: 'Passa il robot aspirapolvere (Fufi)' }
+}
+
+/** Limone: niente Fufi, si passa l'aspirapolvere normale. */
+export function passaAspirapolvere(): StepDef {
+  return { id: 'passa-fufi', kind: 'confirm', emoji: '🧹', label: 'Passa l’aspirapolvere' }
 }
 
 export function salutaChiInPiscina(): StepDef {
