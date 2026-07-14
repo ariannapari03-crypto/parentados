@@ -96,7 +96,8 @@ function limoneApertura(ctx: ChecklistCtx): StepDef[] {
     ]
   }
   if (ctx.stagione === 'estate' && !ctx.inizioStagione) {
-    return [b.apriAcquaSemplice()]
+    // gas e boiler vengono chiusi a ogni chiusura, quindi vanno riaperti a ogni apertura
+    return [b.apriGas(), b.apriBoiler(), b.apriAcquaSemplice(), b.accendiFrigoFreezer()]
   }
   // inverno — si applica ad ogni soggiorno
   return [

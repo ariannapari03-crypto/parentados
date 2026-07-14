@@ -19,13 +19,14 @@ export function reminderChiaviTelecomandoGarage(): StepDef {
   }
 }
 
-/** San Bartolomeo: le chiavi si trovano anche nella scatola di legno all'ingresso. */
+/** San Bartolomeo: da casa servono le chiavi di casa e del garage; quelle del garage sono anche nella scatola all'ingresso. */
 export function reminderChiaviSanBart(): StepDef {
   return {
     id: 'reminder-chiavi',
     kind: 'confirm',
     emoji: '🔑',
-    label: 'Prendi le chiavi (sono anche nella scatola di legno all’ingresso)',
+    label:
+      'Prendi da casa le chiavi di San Bart e quelle del garage (le chiavi del garage sono anche nella scatola di legno all’ingresso)',
   }
 }
 
