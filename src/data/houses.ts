@@ -2,6 +2,11 @@ import type { House } from '../types/domain'
 
 const LIMONE_INFO_GESTIONE = [
   {
+    titolo: 'Gestione immondizia',
+    corpo:
+      'Niente umido: sacco unico per umido e indifferenziata. Plastica, vetro e carta in qualunque sacco. Bidoni sul piazzale Bottero.',
+  },
+  {
     titolo: 'Termosifoni',
     corpo: 'Da poco ci sono le valvole automatiche sui termosifoni.',
   },
@@ -31,6 +36,16 @@ export const HOUSES: House[] = [
         titolo: 'Gestione immondizia',
         corpo:
           'Prendi la tessera in ingresso. Ai bidoni: pulsante, appoggia la carta, pedale e butta. Sacco grigio per l’indifferenziata, sacchetto biodegradabile per l’umido, sacchetto qualsiasi per plastica/carta/vetro.',
+      },
+      {
+        titolo: 'Tessera piscina',
+        corpo:
+          'È nella scatola di legno all’ingresso. Appendila a una sdraio quando scendi in piscina, poi riportala su.',
+      },
+      {
+        titolo: 'Garage e cancello',
+        corpo:
+          'A luglio e agosto il garage è a disposizione. Le chiavi del cancello sono nella scatola di legno all’ingresso.',
       },
     ],
   },

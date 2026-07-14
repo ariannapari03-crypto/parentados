@@ -3,7 +3,7 @@ import type { ChecklistCtx, StepDef } from './checklistTypes'
 import * as b from './checklistBuilders'
 
 function sanBartolomeoPrePartenza(): StepDef[] {
-  return [b.reminderChiavi(true), b.controllaOggettiDaPortare()]
+  return [b.reminderChiaviSanBart(), b.controllaOggettiDaPortare()]
 }
 
 function sanBartolomeoApertura(ctx: ChecklistCtx): StepDef[] {
@@ -34,7 +34,7 @@ function sanBartolomeoApertura(ctx: ChecklistCtx): StepDef[] {
 
 function sanBartolomeoChiusura(ctx: ChecklistCtx): StepDef[] {
   const isEstate = ctx.stagione === 'estate'
-  const steps: StepDef[] = [...b.lenzuolaBranch(), ...b.scorteChecklist()]
+  const steps: StepDef[] = [...b.lenzuolaBranch(), ...b.scorteChecklist(true)]
   if (isEstate) steps.push(b.ritiraRobaStesaMare())
   steps.push(b.differenziataMare(), b.ritiraBidoni(), b.puliziaBagno(), b.passaFufi())
   if (isEstate) {
@@ -43,14 +43,19 @@ function sanBartolomeoChiusura(ctx: ChecklistCtx): StepDef[] {
   steps.push(b.chiudiFinestreTapparelle())
 
   if (ctx.fineStagione) {
+    // fine stagione: casa "spenta" fino alla prossima apertura
     steps.push(
       b.svuotaFrigoFreezer(),
+      b.lavastoviglieAperta(),
       b.copriMobili(),
       b.puliziaProfonda(),
       b.portaGiuRobaCasa(),
-      b.chiudiLuce(),
+      b.staccaCorrente(),
       b.lenzuolaNonRimesse(),
     )
+  } else {
+    // tra un soggiorno e l'altro la casa resta "viva"
+    steps.push(b.frigoChiusoAcceso(), b.lavastoviglieAperta())
   }
   steps.push(b.chiudiAcqua())
   steps.push(b.messaggioFinale())
@@ -109,26 +114,27 @@ function limoneApertura(ctx: ChecklistCtx): StepDef[] {
 
 function limoneChiusura(ctx: ChecklistCtx): StepDef[] {
   const isEstate = ctx.stagione === 'estate'
-  const steps: StepDef[] = [...b.lenzuolaBranch(), ...b.scorteChecklist()]
+  // in montagna niente acqua in frigo tra le scorte: basta la carta igienica
+  const steps: StepDef[] = [...b.lenzuolaBranch(), ...b.scorteChecklist(false)]
   if (isEstate) steps.push(b.ritiraRobaStesaMontagna())
   steps.push(b.differenziataMontagna(), b.puliziaBagno(), b.passaAspirapolvere())
-  // il gas si chiude sempre, in ogni chiusura (estate o inverno)
-  steps.push(b.chiudiGas())
+  // gas e boiler si chiudono/verificano sempre, in ogni chiusura
+  steps.push(b.chiudiGas(), b.chiudiBoiler())
   if (!isEstate) {
-    // inverno: boiler/luce si chiudono ad ogni soggiorno
-    steps.push(b.chiudiBoiler(), b.chiudiLuce())
+    // inverno: anche la luce si chiude ad ogni soggiorno
+    steps.push(b.chiudiLuce())
   }
   steps.push(b.chiudiFinestreImposte())
 
   if (ctx.fineStagione) {
-    if (isEstate) {
-      steps.push(b.chiudiBoiler(), b.chiudiLuce())
-    }
-    steps.push(b.svuotaFrigoFreezer(), b.copriMobili(), b.puliziaProfonda(), b.portaGiuRobaCasa())
+    if (isEstate) steps.push(b.chiudiLuce())
+    steps.push(b.svuotaFrigoFreezer(), b.lavastoviglieAperta(), b.copriMobili(), b.puliziaProfonda(), b.portaGiuRobaCasa())
     if (isEstate) steps.push(b.lenzuolaNonRimesse())
+  } else {
+    steps.push(b.frigoChiusoAccesoLimone(), b.lavastoviglieAperta())
   }
 
-  steps.push(b.chiudiAcqua())
+  steps.push(b.chiudiAcquaLimone())
   steps.push(b.messaggioFinale())
   return steps
 }

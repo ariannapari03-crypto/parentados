@@ -19,6 +19,16 @@ export function reminderChiaviTelecomandoGarage(): StepDef {
   }
 }
 
+/** San Bartolomeo: le chiavi si trovano anche nella scatola di legno all'ingresso. */
+export function reminderChiaviSanBart(): StepDef {
+  return {
+    id: 'reminder-chiavi',
+    kind: 'confirm',
+    emoji: '🔑',
+    label: 'Prendi le chiavi (sono anche nella scatola di legno all’ingresso)',
+  }
+}
+
 export function controllaOggettiDaPortare(): StepDef {
   return {
     id: 'controlla-oggetti',
@@ -52,6 +62,16 @@ export function chiudiAcqua(): StepDef {
   }
 }
 
+/** Limone: il rubinetto di chiusura dell'acqua è in bagno, vicino al wc. */
+export function chiudiAcquaLimone(): StepDef {
+  return {
+    id: 'chiusura-acqua',
+    kind: 'confirm',
+    emoji: '🚰',
+    label: 'Chiudi l’acqua — in bagno, vicino al wc (ultima cosa in assoluto!)',
+  }
+}
+
 export function apriLuce(): StepDef {
   return { id: 'apertura-luce', kind: 'confirm', emoji: '💡', label: 'Apertura luce (quadro elettrico)' }
 }
@@ -73,11 +93,39 @@ export function apriBoiler(): StepDef {
 }
 
 export function chiudiBoiler(): StepDef {
-  return { id: 'chiusura-boiler', kind: 'confirm', emoji: '♨️', label: 'Chiudi il boiler' }
+  return { id: 'chiusura-boiler', kind: 'confirm', emoji: '♨️', label: 'Spegni il boiler (verifica che sia spento)' }
 }
 
 export function accendiFrigoFreezer(): StepDef {
-  return { id: 'chiudi-frigo-freezer', kind: 'confirm', emoji: '🧊', label: 'Accendi frigo e freezer' }
+  return {
+    id: 'chiudi-frigo-freezer',
+    kind: 'confirm',
+    emoji: '🧊',
+    label: 'Accendi frigo e freezer (se erano stati lasciati spenti)',
+  }
+}
+
+/** Chiusura San Bartolomeo: il frigo resta chiuso e acceso tra un soggiorno e l'altro. */
+export function frigoChiusoAcceso(): StepDef {
+  return { id: 'frigo-chiuso-acceso', kind: 'confirm', emoji: '🧊', label: 'Lascia il frigo chiuso e acceso' }
+}
+
+/** Chiusura Limone: frigo chiuso e acceso, oppure spento e aperto. */
+export function frigoChiusoAccesoLimone(): StepDef {
+  return {
+    id: 'frigo-chiuso-acceso',
+    kind: 'confirm',
+    emoji: '🧊',
+    label: 'Frigo: lascialo chiuso e acceso, oppure spento e aperto',
+  }
+}
+
+export function lavastoviglieAperta(): StepDef {
+  return { id: 'lavastoviglie-aperta', kind: 'confirm', emoji: '🍽️', label: 'Lascia la lavastoviglie aperta' }
+}
+
+export function staccaCorrente(): StepDef {
+  return { id: 'stacca-corrente', kind: 'confirm', emoji: '🔌', label: 'Stacca la corrente dal quadro' }
 }
 
 export function scopriMobili(): StepDef {
@@ -227,9 +275,14 @@ export function differenziataMare(): StepDef {
   }
 }
 
-/** Limone: niente tessera né codice colori dei sacchi (vedi le Informazioni di gestione della casa). */
+/** Limone: bidoni sul piazzale Bottero, dettaglio sacchi nelle Informazioni di gestione. */
 export function differenziataMontagna(): StepDef {
-  return { id: 'differenziata', kind: 'confirm', emoji: '♻️', label: 'Porta giù la differenziata ai bidoni' }
+  return {
+    id: 'differenziata',
+    kind: 'confirm',
+    emoji: '♻️',
+    label: 'Porta giù l’immondizia ai bidoni sul piazzale Bottero',
+  }
 }
 
 export function ritiraBidoni(): StepDef {
@@ -265,37 +318,43 @@ export function chiudiFinestre(): StepDef {
   return { id: 'chiudi-finestre', kind: 'confirm', emoji: '🪟', label: 'Chiudi le finestre' }
 }
 
-/** Checklist scorte minime di chiusura (spec 4.5), sempre presente, tono scherzoso. */
-export function scorteChecklist(): StepDef[] {
-  return [
-    {
+/**
+ * Checklist scorte minime di chiusura (spec 4.5), tono scherzoso.
+ * Acqua solo dove serve tenere qualche bottiglia (mare); in montagna basta la carta igienica.
+ * Tutto il resto (alimentari, detersivi) si segnala solo se manca.
+ */
+export function scorteChecklist(includeAcqua = true): StepDef[] {
+  const steps: StepDef[] = []
+  if (includeAcqua) {
+    steps.push({
       id: 'scorte-acqua',
       kind: 'scorte',
       emoji: '💧',
-      label: 'C’è l’acqua in frigo?',
+      label: 'C’è un po’ d’acqua? (bastano un paio di bottiglie)',
       options: [
-        { value: 'gia', label: 'C’è già' },
+        { value: 'gia', label: 'Sì, c’è' },
         { value: 'comprata', label: 'Appena comprata' },
       ],
-    },
-    {
-      id: 'scorte-carta-igienica',
-      kind: 'scorte',
-      emoji: '🧻',
-      label: 'C’è la carta igienica?',
-      options: [
-        { value: 'gia', label: 'C’è già' },
-        { value: 'comprata', label: 'Appena comprata' },
-      ],
-    },
-    {
-      id: 'scorte-altro',
-      kind: 'scorte',
-      emoji: '🛒',
-      label: 'C’è altro che è finito e va ricomprato?',
-      freeText: true,
-    },
-  ]
+    })
+  }
+  steps.push({
+    id: 'scorte-carta-igienica',
+    kind: 'scorte',
+    emoji: '🧻',
+    label: 'C’è la carta igienica? (bastano un paio di rotoli)',
+    options: [
+      { value: 'gia', label: 'Sì, c’è' },
+      { value: 'comprata', label: 'Appena comprata' },
+    ],
+  })
+  steps.push({
+    id: 'scorte-altro',
+    kind: 'scorte',
+    emoji: '🛒',
+    label: 'Manca altro da ricomprare? (alimentari, detersivi…) Scrivilo qui, si segnala al ritorno.',
+    freeText: true,
+  })
+  return steps
 }
 
 export function svuotaFrigoFreezer(): StepDef {
