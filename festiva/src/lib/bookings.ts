@@ -35,6 +35,20 @@ export async function createRedemption(input: {
   return { error: error ? error.message : null }
 }
 
+/** Riscatti ricevuti da un partner (lato locale). Gli eventi non sono
+ *  leggibili dal partner per privacy: mostriamo codice, promo e data. */
+export async function listRedemptionsForPartner(partnerId: string): Promise<RedemptionRow[]> {
+  if (!supabase) return []
+  const { data, error } = await supabase
+    .from('bookings')
+    .select('id, event_id, status, redemption_code, created_at, promotion:promotions(title, discount_type, value)')
+    .eq('partner_id', partnerId)
+    .not('redemption_code', 'is', null)
+    .order('created_at', { ascending: false })
+  if (error) throw error
+  return (data ?? []) as unknown as RedemptionRow[]
+}
+
 export async function listRedemptions(eventIds: string[]): Promise<RedemptionRow[]> {
   if (!supabase || eventIds.length === 0) return []
   const { data, error } = await supabase

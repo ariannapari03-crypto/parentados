@@ -2,9 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { isSupabaseConfigured } from './lib/supabase'
 import { useAuth } from './auth/AuthContext'
 import { useI18n } from './i18n/I18nContext'
-import type { StringKey } from './i18n/strings'
 import { AppLayout } from './components/AppLayout'
-import { PlaceholderPage } from './pages/PlaceholderPage'
 import { SetupNeededPage } from './pages/SetupNeededPage'
 import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
@@ -16,6 +14,9 @@ import { VendorsPage } from './pages/organizer/VendorsPage'
 import { PartnerDetailPage } from './pages/organizer/PartnerDetailPage'
 import { PromoPage } from './pages/organizer/PromoPage'
 import { PartnerDashboardPage } from './pages/partner/DashboardPage'
+import { PartnerListingPage } from './pages/partner/ListingPage'
+import { PartnerPromoPage } from './pages/partner/PartnerPromoPage'
+import { PartnerRedemptionsPage } from './pages/partner/RedemptionsPage'
 
 function Splash() {
   const { t } = useI18n()
@@ -55,16 +56,10 @@ function RoleHome() {
   return profile?.role === 'partner' ? <PartnerDashboardPage /> : <HomePage />
 }
 
-function Ph({ titleKey, emoji }: { titleKey: StringKey; emoji: string }) {
-  const { t } = useI18n()
-  return <PlaceholderPage title={t(titleKey)} emoji={emoji} />
-}
-
-// La sezione Promo mostra la vetrina all'organizzatore; per il partner
-// (gestione delle proprie promo) arriva nella Fase 5.
+// La sezione Promo: vetrina per l'organizzatore, gestione per il partner.
 function PromoRoute() {
   const { profile } = useAuth()
-  return profile?.role === 'partner' ? <Ph titleKey="navPromo" emoji="🎟️" /> : <PromoPage />
+  return profile?.role === 'partner' ? <PartnerPromoPage /> : <PromoPage />
 }
 
 export default function App() {
@@ -100,8 +95,8 @@ export default function App() {
           <Route path="guests" element={<GuestsPage />} />
           {/* Condivise / Partner */}
           <Route path="promo" element={<PromoRoute />} />
-          <Route path="redemptions" element={<Ph titleKey="navRedemptions" emoji="🎫" />} />
-          <Route path="listing" element={<Ph titleKey="navProfileCard" emoji="✏️" />} />
+          <Route path="redemptions" element={<PartnerRedemptionsPage />} />
+          <Route path="listing" element={<PartnerListingPage />} />
           <Route path="*" element={<Navigate to="/app" replace />} />
         </Route>
 
