@@ -9,6 +9,8 @@ import { SetupNeededPage } from './pages/SetupNeededPage'
 import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { HomePage } from './pages/organizer/HomePage'
+import { CreatePage } from './pages/organizer/CreatePage'
+import { EventDetailPage } from './pages/organizer/EventDetailPage'
 import { PartnerDashboardPage } from './pages/partner/DashboardPage'
 
 function Splash() {
@@ -80,7 +82,8 @@ export default function App() {
         <Route path="/app" element={<Protected />}>
           <Route index element={<RoleHome />} />
           {/* Organizer */}
-          <Route path="create" element={<Ph titleKey="navCreate" emoji="➕" />} />
+          <Route path="create" element={<CreatePage />} />
+          <Route path="event/:id" element={<EventDetailPage />} />
           <Route path="vendors" element={<Ph titleKey="navVendors" emoji="🛍️" />} />
           <Route path="guests" element={<Ph titleKey="navGuests" emoji="👥" />} />
           {/* Condivise / Partner */}
