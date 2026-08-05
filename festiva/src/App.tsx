@@ -12,6 +12,9 @@ import { HomePage } from './pages/organizer/HomePage'
 import { CreatePage } from './pages/organizer/CreatePage'
 import { EventDetailPage } from './pages/organizer/EventDetailPage'
 import { GuestsPage } from './pages/organizer/GuestsPage'
+import { VendorsPage } from './pages/organizer/VendorsPage'
+import { PartnerDetailPage } from './pages/organizer/PartnerDetailPage'
+import { PromoPage } from './pages/organizer/PromoPage'
 import { PartnerDashboardPage } from './pages/partner/DashboardPage'
 
 function Splash() {
@@ -57,6 +60,13 @@ function Ph({ titleKey, emoji }: { titleKey: StringKey; emoji: string }) {
   return <PlaceholderPage title={t(titleKey)} emoji={emoji} />
 }
 
+// La sezione Promo mostra la vetrina all'organizzatore; per il partner
+// (gestione delle proprie promo) arriva nella Fase 5.
+function PromoRoute() {
+  const { profile } = useAuth()
+  return profile?.role === 'partner' ? <Ph titleKey="navPromo" emoji="🎟️" /> : <PromoPage />
+}
+
 export default function App() {
   if (!isSupabaseConfigured) return <SetupNeededPage />
 
@@ -85,10 +95,11 @@ export default function App() {
           {/* Organizer */}
           <Route path="create" element={<CreatePage />} />
           <Route path="event/:id" element={<EventDetailPage />} />
-          <Route path="vendors" element={<Ph titleKey="navVendors" emoji="🛍️" />} />
+          <Route path="vendors" element={<VendorsPage />} />
+          <Route path="partner/:id" element={<PartnerDetailPage />} />
           <Route path="guests" element={<GuestsPage />} />
           {/* Condivise / Partner */}
-          <Route path="promo" element={<Ph titleKey="navPromo" emoji="🎟️" />} />
+          <Route path="promo" element={<PromoRoute />} />
           <Route path="redemptions" element={<Ph titleKey="navRedemptions" emoji="🎫" />} />
           <Route path="listing" element={<Ph titleKey="navProfileCard" emoji="✏️" />} />
           <Route path="*" element={<Navigate to="/app" replace />} />
