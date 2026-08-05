@@ -39,6 +39,32 @@ export const VENUE_TYPES: Labeled<string>[] = [
   { value: 'private', emoji: '🏠', label: { it: 'Spazio privato', en: 'Private venue' } },
 ]
 
+// Categorie di attività e spese
+export const CATEGORIES: Labeled<string>[] = [
+  { value: 'venue', emoji: '🏛️', label: { it: 'Locale', en: 'Venue' } },
+  { value: 'catering', emoji: '🍽️', label: { it: 'Catering', en: 'Catering' } },
+  { value: 'decorations', emoji: '🎨', label: { it: 'Decorazioni', en: 'Decorations' } },
+  { value: 'photography', emoji: '📸', label: { it: 'Foto', en: 'Photography' } },
+  { value: 'guests', emoji: '👥', label: { it: 'Invitati', en: 'Guests' } },
+  { value: 'other', emoji: '📝', label: { it: 'Altro', en: 'Other' } },
+]
+
+export const PRIORITIES: Labeled<string>[] = [
+  { value: 'high', emoji: '🔴', label: { it: 'Alta', en: 'High' } },
+  { value: 'medium', emoji: '🟡', label: { it: 'Media', en: 'Medium' } },
+  { value: 'low', emoji: '🟢', label: { it: 'Bassa', en: 'Low' } },
+]
+
+/** Colore associato a una categoria (per grafici / legende del budget). */
+export const CATEGORY_COLOR: Record<string, string> = {
+  venue: '#A8B5A0',
+  catering: '#D4AF37',
+  decorations: '#F0D8D8',
+  photography: '#6B6B6B',
+  guests: '#C9A227',
+  other: '#B9AE9C',
+}
+
 export function metaLabel<T extends string>(list: Labeled<T>[], value: T | null | undefined, lang: Lang): string {
   const found = list.find((x) => x.value === value)
   return found ? found.label[lang] : ''

@@ -51,6 +51,29 @@ export interface EventRecord {
   created_at: string
 }
 
+export interface Task {
+  id: string
+  event_id: string
+  title: string
+  category: string
+  due_date: string | null
+  priority: Priority
+  completed: boolean
+  notes: string | null
+  created_at: string
+}
+
+export interface Expense {
+  id: string
+  event_id: string
+  booking_id: string | null
+  description: string
+  amount: number
+  spent_on: string | null
+  category: string
+  created_at: string
+}
+
 export interface Partner {
   id: string
   owner_id: string | null

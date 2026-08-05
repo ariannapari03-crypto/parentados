@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../../auth/AuthContext'
 import { useI18n } from '../../i18n/I18nContext'
 import { listEvents } from '../../lib/events'
+import { taskStatsForEvents } from '../../lib/tasks'
 import { formatDate } from '../../lib/format'
 import { EVENT_TYPES, metaEmoji, metaLabel, setupProgress } from '../../data/eventMeta'
 import { ProgressRing } from '../../components/ProgressRing'
 import type { EventRecord } from '../../types/domain'
+
+type Stats = Record<string, { total: number; done: number }>
 
 export function HomePage() {
   const { t, lang } = useI18n()
@@ -14,17 +17,31 @@ export function HomePage() {
   const ownerId = profile?.id ?? session?.user?.id
 
   const [events, setEvents] = useState<EventRecord[] | null>(null)
+  const [stats, setStats] = useState<Stats>({})
 
   useEffect(() => {
     if (!ownerId) return
     let active = true
     listEvents(ownerId)
-      .then((rows) => active && setEvents(rows))
+      .then(async (rows) => {
+        if (!active) return
+        setEvents(rows)
+        if (rows.length) {
+          const s = await taskStatsForEvents(rows.map((r) => r.id))
+          if (active) setStats(s)
+        }
+      })
       .catch(() => active && setEvents([]))
     return () => {
       active = false
     }
   }, [ownerId])
+
+  const progressFor = (ev: EventRecord): number => {
+    const s = stats[ev.id]
+    if (s && s.total > 0) return Math.round((s.done / s.total) * 100)
+    return setupProgress(ev)
+  }
 
   return (
     <div style={{ paddingTop: 12 }}>
@@ -56,7 +73,7 @@ export function HomePage() {
       ) : (
         <div style={{ display: 'grid', gap: 12 }}>
           {events.map((ev) => {
-            const pct = setupProgress(ev)
+            const pct = progressFor(ev)
             const color = pct >= 100 ? 'var(--color-gold)' : 'var(--color-sage)'
             return (
               <Link
