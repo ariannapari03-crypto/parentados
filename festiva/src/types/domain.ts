@@ -74,6 +74,18 @@ export interface Expense {
   created_at: string
 }
 
+export interface Guest {
+  id: string
+  event_id: string
+  name: string
+  email: string | null
+  phone: string | null
+  rsvp: Rsvp
+  dietary: string | null
+  plus_one: boolean
+  created_at: string
+}
+
 export interface Partner {
   id: string
   owner_id: string | null

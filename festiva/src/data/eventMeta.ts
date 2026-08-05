@@ -55,6 +55,19 @@ export const PRIORITIES: Labeled<string>[] = [
   { value: 'low', emoji: '🟢', label: { it: 'Bassa', en: 'Low' } },
 ]
 
+// Stati RSVP degli invitati
+export const RSVP_STATES: Labeled<string>[] = [
+  { value: 'confirmed', emoji: '🟢', label: { it: 'Confermato', en: 'Confirmed' } },
+  { value: 'pending', emoji: '🟡', label: { it: 'In attesa', en: 'Pending' } },
+  { value: 'declined', emoji: '🔴', label: { it: 'Rifiutato', en: 'Declined' } },
+]
+
+export const RSVP_COLOR: Record<string, string> = {
+  confirmed: '#A8B5A0',
+  pending: '#D4AF37',
+  declined: '#D8A3A0',
+}
+
 /** Colore associato a una categoria (per grafici / legende del budget). */
 export const CATEGORY_COLOR: Record<string, string> = {
   venue: '#A8B5A0',

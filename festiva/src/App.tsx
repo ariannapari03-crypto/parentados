@@ -11,6 +11,7 @@ import { RegisterPage } from './pages/RegisterPage'
 import { HomePage } from './pages/organizer/HomePage'
 import { CreatePage } from './pages/organizer/CreatePage'
 import { EventDetailPage } from './pages/organizer/EventDetailPage'
+import { GuestsPage } from './pages/organizer/GuestsPage'
 import { PartnerDashboardPage } from './pages/partner/DashboardPage'
 
 function Splash() {
@@ -85,7 +86,7 @@ export default function App() {
           <Route path="create" element={<CreatePage />} />
           <Route path="event/:id" element={<EventDetailPage />} />
           <Route path="vendors" element={<Ph titleKey="navVendors" emoji="🛍️" />} />
-          <Route path="guests" element={<Ph titleKey="navGuests" emoji="👥" />} />
+          <Route path="guests" element={<GuestsPage />} />
           {/* Condivise / Partner */}
           <Route path="promo" element={<Ph titleKey="navPromo" emoji="🎟️" />} />
           <Route path="redemptions" element={<Ph titleKey="navRedemptions" emoji="🎫" />} />
