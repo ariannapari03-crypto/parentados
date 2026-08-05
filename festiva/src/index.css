@@ -113,3 +113,20 @@ h1, h2, h3 { font-family: var(--font-serif); }
   border: 1.5px solid var(--color-sage);
   color: var(--color-sage-dk);
 }
+
+/* ---- Accessibilità: focus da tastiera sempre visibile ---- */
+:focus-visible {
+  outline: 2px solid var(--color-sage-dk);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+@media (prefers-color-scheme: dark) {
+  :focus-visible { outline-color: var(--color-champagne); }
+}
+
+/* ---- Micro-animazione d'ingresso (disattivata da prefers-reduced-motion) ---- */
+@keyframes fx-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+.fx-card { animation: fx-in 0.28s ease both; }

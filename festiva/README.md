@@ -63,13 +63,19 @@ npm run build
 npm run preview
 ```
 
+Deploy con **GitHub + Vercel + Supabase**: vedi [`DEPLOY.md`](./DEPLOY.md).
+
 ## Stato (roadmap)
 
 - [x] **Fase 0 — Fondamenta**: scaffolding, tema, i18n IT/EN, PWA, login
       email+password con ruoli, schema database completo.
-- [ ] Fase 1 — Eventi & Dashboard (wizard 5 step, persistenza)
-- [ ] Fase 2 — Checklist & Budget
-- [ ] Fase 3 — Invitati & RSVP
-- [ ] Fase 4 — Marketplace & Promozioni (riscatto codice/QR)
-- [ ] Fase 5 — Area Locale self-service
-- [ ] Fase 6 — Rifinitura (accessibilità, seed dati Alba, test)
+- [x] **Fase 1 — Eventi & Dashboard**: wizard 5 step persistente, home con
+      progresso reale.
+- [x] **Fase 2 — Checklist & Budget**: attività con scadenze/priorità, spese
+      reali e grafico.
+- [x] **Fase 3 — Invitati & RSVP**: rubrica per evento, stati, export CSV.
+- [x] **Fase 4 — Marketplace & Promozioni**: catalogo Alba, offerte, riscatto
+      con codice.
+- [x] **Fase 5 — Area Locale**: scheda, promozioni self-service, riscatti.
+- [x] **Fase 6 — Rifinitura**: code-splitting, accessibilità, micro-animazioni,
+      PWA, guida di deploy.

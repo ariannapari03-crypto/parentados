@@ -1,22 +1,25 @@
+import { lazy, Suspense } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { isSupabaseConfigured } from './lib/supabase'
 import { useAuth } from './auth/AuthContext'
 import { useI18n } from './i18n/I18nContext'
 import { AppLayout } from './components/AppLayout'
 import { SetupNeededPage } from './pages/SetupNeededPage'
-import { LoginPage } from './pages/LoginPage'
-import { RegisterPage } from './pages/RegisterPage'
-import { HomePage } from './pages/organizer/HomePage'
-import { CreatePage } from './pages/organizer/CreatePage'
-import { EventDetailPage } from './pages/organizer/EventDetailPage'
-import { GuestsPage } from './pages/organizer/GuestsPage'
-import { VendorsPage } from './pages/organizer/VendorsPage'
-import { PartnerDetailPage } from './pages/organizer/PartnerDetailPage'
-import { PromoPage } from './pages/organizer/PromoPage'
-import { PartnerDashboardPage } from './pages/partner/DashboardPage'
-import { PartnerListingPage } from './pages/partner/ListingPage'
-import { PartnerPromoPage } from './pages/partner/PartnerPromoPage'
-import { PartnerRedemptionsPage } from './pages/partner/RedemptionsPage'
+
+// Pagine caricate on-demand (code-splitting): il bundle iniziale resta leggero.
+const LoginPage = lazy(() => import('./pages/LoginPage').then((m) => ({ default: m.LoginPage })))
+const RegisterPage = lazy(() => import('./pages/RegisterPage').then((m) => ({ default: m.RegisterPage })))
+const HomePage = lazy(() => import('./pages/organizer/HomePage').then((m) => ({ default: m.HomePage })))
+const CreatePage = lazy(() => import('./pages/organizer/CreatePage').then((m) => ({ default: m.CreatePage })))
+const EventDetailPage = lazy(() => import('./pages/organizer/EventDetailPage').then((m) => ({ default: m.EventDetailPage })))
+const GuestsPage = lazy(() => import('./pages/organizer/GuestsPage').then((m) => ({ default: m.GuestsPage })))
+const VendorsPage = lazy(() => import('./pages/organizer/VendorsPage').then((m) => ({ default: m.VendorsPage })))
+const PartnerDetailPage = lazy(() => import('./pages/organizer/PartnerDetailPage').then((m) => ({ default: m.PartnerDetailPage })))
+const PromoPage = lazy(() => import('./pages/organizer/PromoPage').then((m) => ({ default: m.PromoPage })))
+const PartnerDashboardPage = lazy(() => import('./pages/partner/DashboardPage').then((m) => ({ default: m.PartnerDashboardPage })))
+const PartnerListingPage = lazy(() => import('./pages/partner/ListingPage').then((m) => ({ default: m.PartnerListingPage })))
+const PartnerPromoPage = lazy(() => import('./pages/partner/PartnerPromoPage').then((m) => ({ default: m.PartnerPromoPage })))
+const PartnerRedemptionsPage = lazy(() => import('./pages/partner/RedemptionsPage').then((m) => ({ default: m.PartnerRedemptionsPage })))
 
 function Splash() {
   const { t } = useI18n()
@@ -67,41 +70,43 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            <PublicOnly>
-              <LoginPage />
-            </PublicOnly>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <PublicOnly>
-              <RegisterPage />
-            </PublicOnly>
-          }
-        />
+      <Suspense fallback={<Splash />}>
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              <PublicOnly>
+                <LoginPage />
+              </PublicOnly>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <PublicOnly>
+                <RegisterPage />
+              </PublicOnly>
+            }
+          />
 
-        <Route path="/app" element={<Protected />}>
-          <Route index element={<RoleHome />} />
-          {/* Organizer */}
-          <Route path="create" element={<CreatePage />} />
-          <Route path="event/:id" element={<EventDetailPage />} />
-          <Route path="vendors" element={<VendorsPage />} />
-          <Route path="partner/:id" element={<PartnerDetailPage />} />
-          <Route path="guests" element={<GuestsPage />} />
-          {/* Condivise / Partner */}
-          <Route path="promo" element={<PromoRoute />} />
-          <Route path="redemptions" element={<PartnerRedemptionsPage />} />
-          <Route path="listing" element={<PartnerListingPage />} />
+          <Route path="/app" element={<Protected />}>
+            <Route index element={<RoleHome />} />
+            {/* Organizer */}
+            <Route path="create" element={<CreatePage />} />
+            <Route path="event/:id" element={<EventDetailPage />} />
+            <Route path="vendors" element={<VendorsPage />} />
+            <Route path="partner/:id" element={<PartnerDetailPage />} />
+            <Route path="guests" element={<GuestsPage />} />
+            {/* Condivise / Partner */}
+            <Route path="promo" element={<PromoRoute />} />
+            <Route path="redemptions" element={<PartnerRedemptionsPage />} />
+            <Route path="listing" element={<PartnerListingPage />} />
+            <Route path="*" element={<Navigate to="/app" replace />} />
+          </Route>
+
           <Route path="*" element={<Navigate to="/app" replace />} />
-        </Route>
-
-        <Route path="*" element={<Navigate to="/app" replace />} />
-      </Routes>
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   )
 }

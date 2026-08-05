@@ -19,7 +19,7 @@ export default defineConfig({
         display: 'standalone',
         lang: 'it',
         icons: [
-          { src: 'icon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' },
+          { src: 'icon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any maskable' },
         ],
       },
     }),
