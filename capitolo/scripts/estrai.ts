@@ -1,9 +1,9 @@
 import 'dotenv/config';
-import { pool, chiudi } from '../lib/db.js';
-import { ritaglia } from '../lib/ritaglio.js';
-import { estraiTestoPdf } from '../lib/pdf.js';
-import { clienteAnthropic, estraiCalendario, estraiRegole } from '../lib/estrattore.js';
-import { salvaCalendario, salvaRegole } from '../lib/persistenza.js';
+import { pool, chiudi } from '../lib/db';
+import { ritaglia } from '../lib/ritaglio';
+import { estraiTestoPdf } from '../lib/pdf';
+import { clienteAnthropic, estraiCalendario, estraiRegole } from '../lib/estrattore';
+import { salvaCalendario, salvaRegole } from '../lib/persistenza';
 
 // Uso:
 //   tsx scripts/estrai.ts --documento <id> --calendario --dipartimento <id>

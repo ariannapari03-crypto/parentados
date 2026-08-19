@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { ritaglia } from '../lib/ritaglio.js';
+import { ritaglia } from '../lib/ritaglio';
 
 // Compito ③: ritaglio.
 //

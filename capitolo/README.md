@@ -67,3 +67,8 @@ Si costruisce un pezzo per volta, ognuno con un criterio secco di completamento
   npx tsx scripts/estrai.ts --documento <id> --calendario --dipartimento <id>
   npx tsx scripts/estrai.ts --documento <id> --regole --corso <id>
   ```
+- ⑤ **Revisione** — pagina `/revisione` protetta da `REVISIONE_PASSWORD`, guidata da tastiera (`C` conferma · `S` scarta · `E` modifica · `J`/`K` scorri). Solo una persona porta una proposta a `confermata`; le letture pubbliche (`lib/pubbliche.ts`) filtrano sempre su `confermata`. ✅
+
+  ```bash
+  REVISIONE_PASSWORD=... npm run dev   # poi apri /revisione
+  ```

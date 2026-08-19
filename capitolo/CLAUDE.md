@@ -96,7 +96,7 @@ Il valore del sistema è mettere insieme, per corso, informazioni che oggi stann
 - [x] **② Scarica con allegati** — data una URL: grezzo + hash salvati; se la pagina rimanda a PDF, vengono seguiti e salvati legati alla pagina. Verificato sul caso PAO (nessuna data nell'HTML → il PDF del calendario viene seguito).
 - [x] **③ Ritaglio** — toglie navigazione, piè di pagina, riquadri di servizio e script. Su tre pagine (UniBo Scienze storiche, UniBo PAO, UniTO Lingue) il testo ritagliato è sotto il 15% dell'originale e nessuna tabella di scadenze va persa (le tabelle sono protette dalla rimozione).
 - [x] **④ Estrazione** — due prompt versionati (calendario di dipartimento, regole di corso) su modello iniettabile. Ogni proposta è ancorata: `fonte_citazione` deve essere sottostringa del testo, la data deve comparire scritta (mai stimata), altrimenti la scadenza è scartata. Verificato: 30 date su Scienze storiche, 9 nel PDF allegato di PAO; lunghezza «orientativa» resta non vincolante. PDF letti con pdf-parse.
-- [ ] ⑤ Revisione
+- [x] **⑤ Revisione** — pagina `/revisione` protetta da password (`REVISIONE_PASSWORD`), guidata da tastiera (C conferma · S scarta · E modifica · J/K scorri). Le transizioni di stato le compie solo la persona; le letture pubbliche filtrano sempre su `confermata`. Data-layer verificato in test; l'app compila (`next build`).
 - [ ] ⑥ Pagine pubbliche
 - [ ] ⑦ Ricognizione
 

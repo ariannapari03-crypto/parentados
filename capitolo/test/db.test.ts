@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import { afterAll, describe, expect, it } from 'vitest';
-import { query, chiudi } from '../lib/db.js';
+import { query, chiudi } from '../lib/db';
 
 // Test di lettura/scrittura del compito ①.
 //

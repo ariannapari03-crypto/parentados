@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { pool, chiudi } from '../lib/db.js';
+import { pool, chiudi } from '../lib/db';
 
 // Applica le migrazioni non ancora applicate, in ordine.
 //

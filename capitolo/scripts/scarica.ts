@@ -1,6 +1,6 @@
 import 'dotenv/config';
-import { scaricaConAllegati } from '../lib/scarica.js';
-import { chiudi } from '../lib/db.js';
+import { scaricaConAllegati } from '../lib/scarica';
+import { chiudi } from '../lib/db';
 
 // Uso: tsx scripts/scarica.ts <url>
 //

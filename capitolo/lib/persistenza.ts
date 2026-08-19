@@ -1,5 +1,5 @@
-import { pool } from './db.js';
-import type { EsitoCalendario, EsitoRegole } from './estrattore.js';
+import { pool } from './db';
+import type { EsitoCalendario, EsitoRegole } from './estrattore';
 
 // Salvataggio delle proposte prodotte dall'estrattore (compito ④).
 //

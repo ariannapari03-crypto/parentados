@@ -3,16 +3,16 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { afterAll, describe, expect, it } from 'vitest';
-import { ritaglia } from '../lib/ritaglio.js';
-import { estraiTestoPdf } from '../lib/pdf.js';
+import { ritaglia } from '../lib/ritaglio';
+import { estraiTestoPdf } from '../lib/pdf';
 import {
   citazioneAncorata,
   estraiCalendario,
   estraiRegole,
   type ClienteModello,
-} from '../lib/estrattore.js';
-import { salvaCalendario } from '../lib/persistenza.js';
-import { query, chiudi } from '../lib/db.js';
+} from '../lib/estrattore';
+import { salvaCalendario } from '../lib/persistenza';
+import { query, chiudi } from '../lib/db';
 
 // Compito ④: estrazione. Nessuna chiamata al modello reale: iniettiamo un
 // ClienteModello finto che restituisce risposte REGISTRATE (fixture .json),

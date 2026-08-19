@@ -5,8 +5,8 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { afterAll, describe, expect, it } from 'vitest';
-import { estraiAllegati, scaricaConAllegati } from '../lib/scarica.js';
-import { query, chiudi } from '../lib/db.js';
+import { estraiAllegati, scaricaConAllegati } from '../lib/scarica';
+import { query, chiudi } from '../lib/db';
 
 // Compito ②: scaricamento con allegati.
 //

@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { parse } from 'node-html-parser';
-import { query } from './db.js';
+import { query } from './db';
 
 // Compito ②: scaricare una pagina, conservare il grezzo integrale con l'hash,
 // e SEGUIRE gli allegati (i PDF, tipicamente nel riquadro «In evidenza» di
