@@ -1,0 +1,27 @@
+{
+  "regole": [
+    {
+      "tipo": "lunghezza",
+      "testo": "Lunghezza orientativa di circa 50.000 parole.",
+      "valore": {
+        "parole": 50000,
+        "orientativa": true
+      },
+      "vincolante": false,
+      "classe": null,
+      "fonte_citazione": "L'elaborato finale ha una lunghezza orientativa di circa 50.000 parole, note escluse.",
+      "confidenza": 0.9
+    },
+    {
+      "tipo": "formato",
+      "testo": "Caricamento obbligatorio in formato PDF/A.",
+      "valore": {
+        "formato": "PDF/A"
+      },
+      "vincolante": true,
+      "classe": null,
+      "fonte_citazione": "L'elaborato va caricato esclusivamente in formato PDF/A tramite l'applicativo di Ateneo entro i termini della sessione prescelta.",
+      "confidenza": 0.92
+    }
+  ]
+}

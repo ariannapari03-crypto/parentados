@@ -1,0 +1,109 @@
+{
+  "sessioni": [
+    {
+      "nome": "Sessione estiva",
+      "anno_accademico": "2024/2025",
+      "seduta_da": "2025-07-14",
+      "seduta_a": null,
+      "scadenze": [
+        {
+          "tipo": "domanda_laurea",
+          "nome": "Domanda di laurea",
+          "data_da": "2025-06-09",
+          "data_a": null,
+          "blocca": true,
+          "fonte_citazione": "Sessione estiva: domanda 09/06/2025, consegna 23/06/2025, seduta 14/07/2025",
+          "confidenza": 0.95
+        },
+        {
+          "tipo": "consegna_tesi",
+          "nome": "Consegna elaborato",
+          "data_da": "2025-06-23",
+          "data_a": null,
+          "blocca": false,
+          "fonte_citazione": "Sessione estiva: domanda 09/06/2025, consegna 23/06/2025, seduta 14/07/2025",
+          "confidenza": 0.95
+        },
+        {
+          "tipo": "seduta",
+          "nome": "Seduta",
+          "data_da": "2025-07-14",
+          "data_a": null,
+          "blocca": false,
+          "fonte_citazione": "Sessione estiva: domanda 09/06/2025, consegna 23/06/2025, seduta 14/07/2025",
+          "confidenza": 0.95
+        }
+      ]
+    },
+    {
+      "nome": "Sessione autunnale",
+      "anno_accademico": "2024/2025",
+      "seduta_da": "2025-10-06",
+      "seduta_a": null,
+      "scadenze": [
+        {
+          "tipo": "domanda_laurea",
+          "nome": "Domanda di laurea",
+          "data_da": "2025-09-01",
+          "data_a": null,
+          "blocca": true,
+          "fonte_citazione": "Sessione autunnale: domanda 01/09/2025, consegna 15/09/2025, seduta 06/10/2025",
+          "confidenza": 0.95
+        },
+        {
+          "tipo": "consegna_tesi",
+          "nome": "Consegna elaborato",
+          "data_da": "2025-09-15",
+          "data_a": null,
+          "blocca": false,
+          "fonte_citazione": "Sessione autunnale: domanda 01/09/2025, consegna 15/09/2025, seduta 06/10/2025",
+          "confidenza": 0.95
+        },
+        {
+          "tipo": "seduta",
+          "nome": "Seduta",
+          "data_da": "2025-10-06",
+          "data_a": null,
+          "blocca": false,
+          "fonte_citazione": "Sessione autunnale: domanda 01/09/2025, consegna 15/09/2025, seduta 06/10/2025",
+          "confidenza": 0.95
+        }
+      ]
+    },
+    {
+      "nome": "Sessione straordinaria",
+      "anno_accademico": "2024/2025",
+      "seduta_da": "2025-12-15",
+      "seduta_a": null,
+      "scadenze": [
+        {
+          "tipo": "domanda_laurea",
+          "nome": "Domanda di laurea",
+          "data_da": "2025-11-03",
+          "data_a": null,
+          "blocca": true,
+          "fonte_citazione": "Sessione straordinaria: domanda 03/11/2025, consegna 17/11/2025, seduta 15/12/2025",
+          "confidenza": 0.95
+        },
+        {
+          "tipo": "consegna_tesi",
+          "nome": "Consegna elaborato",
+          "data_da": "2025-11-17",
+          "data_a": null,
+          "blocca": false,
+          "fonte_citazione": "Sessione straordinaria: domanda 03/11/2025, consegna 17/11/2025, seduta 15/12/2025",
+          "confidenza": 0.95
+        },
+        {
+          "tipo": "seduta",
+          "nome": "Seduta",
+          "data_da": "2025-12-15",
+          "data_a": null,
+          "blocca": false,
+          "fonte_citazione": "Sessione straordinaria: domanda 03/11/2025, consegna 17/11/2025, seduta 15/12/2025",
+          "confidenza": 0.95
+        }
+      ]
+    }
+  ]
+}

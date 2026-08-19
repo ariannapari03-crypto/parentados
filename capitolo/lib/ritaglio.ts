@@ -13,8 +13,8 @@ import { parse, type HTMLElement } from 'node-html-parser';
 
 // Tag che non contengono mai contenuto utile: si rimuovono sempre.
 const TAG_RIMUOVI_SEMPRE = new Set([
-  'SCRIPT', 'STYLE', 'NOSCRIPT', 'TEMPLATE', 'SVG', 'IFRAME', 'CANVAS',
-  'BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'LINK', 'META',
+  'HEAD', 'SCRIPT', 'STYLE', 'NOSCRIPT', 'TEMPLATE', 'SVG', 'IFRAME', 'CANVAS',
+  'BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'LINK', 'META', 'TITLE',
 ]);
 
 // Tag strutturali di navigazione/servizio: rumore, ma solo se non custodiscono
@@ -87,7 +87,9 @@ export interface EsitoRitaglio {
 }
 
 export function ritaglia(html: string): EsitoRitaglio {
-  const radice = parse(html, { comment: false });
+  // Togli la dichiarazione <!DOCTYPE ...>, che alcuni parser lasciano nel testo.
+  const senzaDoctype = html.replace(/<!doctype[^>]*>/gi, '');
+  const radice = parse(senzaDoctype, { comment: false });
 
   // 1. Rimuovi il rumore, proteggendo le tabelle.
   const daRimuovere: HTMLElement[] = [];

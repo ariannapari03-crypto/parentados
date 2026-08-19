@@ -61,3 +61,9 @@ Si costruisce un pezzo per volta, ognuno con un criterio secco di completamento
   npx tsx scripts/scarica.ts https://corsi.unibo.it/.../requisiti-e-scadenze
   ```
 - ③ **Ritaglio** — `ritaglia(html)` (`lib/ritaglio.ts`) toglie nav, piè di pagina, riquadri di servizio e script, **proteggendo le tabelle di scadenze**. Su tre atenei il testo scende sotto il 15% dell'originale senza perdere tabelle. ✅
+- ④ **Estrazione** — `estraiCalendario` / `estraiRegole` (`lib/estrattore.ts`) chiamano il modello (client iniettabile, `ANTHROPIC_API_KEY` solo da env) e producono **proposte** con fonte obbligatoria e ancorata; le date non scritte vengono scartate. `lib/pdf.ts` legge i PDF. CLI: ✅
+
+  ```bash
+  npx tsx scripts/estrai.ts --documento <id> --calendario --dipartimento <id>
+  npx tsx scripts/estrai.ts --documento <id> --regole --corso <id>
+  ```
