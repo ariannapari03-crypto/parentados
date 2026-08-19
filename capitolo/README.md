@@ -55,3 +55,8 @@ Si costruisce un pezzo per volta, ognuno con un criterio secco di completamento
 (vedi il brief). Stato in `CLAUDE.md`. Fatto finora:
 
 - ① **Impalcatura e schema** — `db:push` crea le tabelle, il test passa. ✅
+- ② **Scarica con allegati** — `tsx scripts/scarica.ts <url>` salva grezzo + hash e segue i PDF allegati (riquadro «In evidenza» di Plone), legandoli alla pagina. ✅
+
+  ```bash
+  npx tsx scripts/scarica.ts https://corsi.unibo.it/.../requisiti-e-scadenze
+  ```

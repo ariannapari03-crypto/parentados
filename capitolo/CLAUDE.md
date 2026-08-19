@@ -93,7 +93,7 @@ Il valore del sistema è mettere insieme, per corso, informazioni che oggi stann
 ## Stato di avanzamento (i sette compiti del brief)
 
 - [x] **① Impalcatura e schema** — `npm run db:push` crea le tabelle; il test di lettura/scrittura passa.
-- [ ] ② Scarica con allegati
+- [x] **② Scarica con allegati** — data una URL: grezzo + hash salvati; se la pagina rimanda a PDF, vengono seguiti e salvati legati alla pagina. Verificato sul caso PAO (nessuna data nell'HTML → il PDF del calendario viene seguito).
 - [ ] ③ Ritaglio
 - [ ] ④ Estrazione
 - [ ] ⑤ Revisione

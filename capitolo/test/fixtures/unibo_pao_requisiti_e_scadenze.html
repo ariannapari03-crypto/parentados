@@ -1,0 +1,106 @@
+<!--
+  FIXTURE — UniBo · Politica, amministrazione e organizzazione (LM)
+  Pagina: "Prova finale: requisiti e scadenze"
+  Fonte:  https://corsi.unibo.it/magistrale/PoliticaAmministrazioneOrganizzazione/prova-finale-laurea-magistrale-requisiti-e-scadenze
+
+  Ricostruzione fedele della struttura Plone di corsi.unibo.it: da questo
+  ambiente il dominio è bloccato dalla policy di rete, quindi non è stato
+  possibile salvare i byte grezzi originali. Il pattern di download degli
+  allegati (`<nome>.pdf/@@download/file/<Nome>.pdf`) è quello reale di Plone,
+  verificato dall'indice di ricerca. Quando l'ambiente ha accesso alla rete,
+  sostituire questo file con una cattura grezza via `scripts/scarica.ts`.
+
+  Comportamento canonico coperto (vedi CLAUDE.md): il corpo della pagina NON
+  contiene alcuna data; il calendario delle scadenze sta nel PDF allegato nel
+  riquadro «In evidenza». Il raccoglitore deve seguire quel PDF. [inv. 5]
+-->
+<!DOCTYPE html>
+<html lang="it" class="plone-toolbar-left">
+<head>
+  <meta charset="utf-8">
+  <title>Prova finale: requisiti e scadenze — Politica, amministrazione e organizzazione - Laurea Magistrale - Bologna</title>
+  <meta name="description" content="Requisiti e scadenze della prova finale.">
+</head>
+<body class="portaltype-document">
+  <!-- Navigazione di ateneo: rumore da ritagliare (compito ③), da ignorare in ② -->
+  <header id="portal-top">
+    <nav aria-label="principale">
+      <ul>
+        <li><a href="https://www.unibo.it/it">Unibo.it</a></li>
+        <li><a href="/magistrale/PoliticaAmministrazioneOrganizzazione">Home corso</a></li>
+        <li><a href="/magistrale/PoliticaAmministrazioneOrganizzazione/studiare">Studiare</a></li>
+        <li><a href="/magistrale/PoliticaAmministrazioneOrganizzazione/iscriversi">Iscriversi</a></li>
+        <li><a href="https://www.unibo.it/it/servizi-e-opportunita">Servizi</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div id="portal-columns">
+    <main id="content-core">
+      <article>
+        <h1 class="documentFirstHeading">Prova finale: requisiti e scadenze</h1>
+
+        <div id="parent-fieldname-text">
+          <p>
+            Per essere ammessi alla prova finale occorre aver superato tutti gli
+            esami di profitto previsti dal piano di studi e aver acquisito i
+            relativi crediti. La domanda di laurea va presentata secondo le
+            modalità e nei termini indicati dal calendario della sessione di
+            interesse.
+          </p>
+          <p>
+            Le scadenze per la presentazione della domanda, per il caricamento
+            dell'elaborato e per gli adempimenti amministrativi sono raccolte,
+            per ciascuna sessione, nel calendario del Dipartimento di Scienze
+            Politiche e Sociali (SPS), disponibile in allegato in questa pagina.
+          </p>
+          <p>
+            Si raccomanda di consultare il calendario allegato e di rispettare
+            tassativamente i termini indicati: la mancata osservanza comporta il
+            rinvio alla sessione successiva.
+          </p>
+        </div>
+
+        <!-- Riquadro «In evidenza» / allegati di Plone: qui vivono i PDF -->
+        <aside class="portletWrapper" id="portlet-in-evidenza">
+          <div class="portlet portletStaticText">
+            <header class="portletHeader">In evidenza</header>
+            <div class="portletContent">
+              <ul>
+                <li>
+                  <a class="internal-link"
+                     href="calendario-prove-finali-sps.pdf/@@download/file/Calendario%20prove%20finali%20SPS%20Bologna.pdf">
+                    Calendario prove finali SPS Bologna (PDF)
+                  </a>
+                </li>
+                <li>
+                  <a class="internal-link"
+                     href="/magistrale/PoliticaAmministrazioneOrganizzazione/prova-finale-magistrale-modalita">
+                    Redazione della tesi e voto finale
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </article>
+    </main>
+
+    <!-- Colonna di servizio: altri link, nessun allegato di scadenze -->
+    <aside id="portal-column-two">
+      <div class="portlet">
+        <header class="portletHeader">Contatti</header>
+        <div class="portletContent">
+          <a href="mailto:segreteria.sps@unibo.it">Scrivi alla segreteria</a>
+          <a href="/magistrale/PoliticaAmministrazioneOrganizzazione/contatti">Contatti del corso</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <footer id="portal-footer">
+    <a href="https://www.unibo.it/it/ateneo/privacy-e-note-legali">Privacy e note legali</a>
+    <a href="https://www.unibo.it/it/ateneo/contatti">Contatti Unibo</a>
+  </footer>
+</body>
+</html>
