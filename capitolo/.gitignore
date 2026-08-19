@@ -1,0 +1,20 @@
+# dipendenze
+/node_modules
+
+# build Next.js
+/.next
+/out
+
+# ambiente — le chiavi non entrano mai nel repository [inv. 8]
+.env
+.env.local
+.env*.local
+
+# log e sistema
+npm-debug.log*
+*.log
+.DS_Store
+
+# TypeScript
+next-env.d.ts
+*.tsbuildinfo
