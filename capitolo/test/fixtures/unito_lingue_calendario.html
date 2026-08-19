@@ -1,0 +1,150 @@
+<!--
+  FIXTURE — UniTO · Lingue e letterature straniere
+  Pagina: calendario delle sedute di laurea (di dipartimento)
+  Fonte:  https://www.dipartimentolingue.unito.it/do/home.pl/View?doc=laurearsi.html
+
+  Ricostruzione fedele di una pagina UniTO (CMS diverso da Plone: classi e
+  struttura differenti). HTML volutamente molto rumoroso, come l'originale.
+  Comportamento canonico coperto (CLAUDE.md): calendario di dipartimento, HTML
+  molto rumoroso; il ritaglio deve scendere sotto il 15% senza perdere la
+  tabella del calendario. Le date sono di prova. Il dominio non è catturabile
+  qui perché bloccato dalla policy di rete.
+-->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Laurearsi — Dipartimento di Lingue e Letterature Straniere e Culture Moderne — Università di Torino</title>
+  <style>
+    #masthead, .megamenu, #colonna-destra, #footer-unito { font-family: sans-serif; }
+    .box-servizio { background: #f3f3f3; border: 1px solid #ddd; padding: 1rem; }
+    table.calendario { border-collapse: collapse; width: 100%; }
+    table.calendario td, table.calendario th { border: 1px solid #99a; padding: 6px; }
+    .avviso-cookie { position: sticky; top: 0; background: #003366; color: #fff; }
+  </style>
+  <script>
+    /* Rumore: bootstrap del portale UniTO */
+    var UNITO = { base: "https://www.unito.it", lang: "it", tracking: "matomo" };
+    (function(){ var s=document.createElement('script'); s.async=true; })();
+  </script>
+  <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"EducationalOrganization","name":"Dipartimento di Lingue e Letterature Straniere e Culture Moderne","parentOrganization":{"@type":"CollegeOrUniversity","name":"Università degli Studi di Torino","sameAs":"https://www.unito.it"},"url":"https://www.dipartimentolingue.unito.it","breadcrumb":["Home","Didattica","Laurearsi"]}
+  </script>
+  <script>
+    // Rumore: consenso cookie e tracking Matomo del portale UniTO. Da ritagliare.
+    var _paq = window._paq = window._paq || [];
+    _paq.push(['trackPageView']); _paq.push(['enableLinkTracking']);
+    (function(){ var u="https://analytics.unito.it/"; _paq.push(['setTrackerUrl', u+'matomo.php']); _paq.push(['setSiteId','7']); })();
+    window.UNITO_COOKIE = { policyId: 87654321, lang: "it",
+      purposes: { tecnici: true, analitici: false, profilazione: false },
+      vendors: ["matomo","youtube","google-maps"],
+      testo: "Il portale unito.it utilizza cookie tecnici e, previo consenso, cookie analitici e di profilazione di terze parti per finalità statistiche e di miglioramento dei servizi." };
+  </script>
+</head>
+<body class="node-type-pagina sezione-dipartimento">
+  <!-- Rumore: sprite di icone SVG del portale UniTO -->
+  <svg aria-hidden="true" style="position:absolute;width:0;height:0" focusable="false">
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+    <symbol id="i-cerca" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></symbol>
+    <symbol id="i-chiudi" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></symbol>
+    <symbol id="i-freccia" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+  </svg>
+  <div class="avviso-cookie" role="region" aria-label="cookie">
+    Il portale unito.it utilizza cookie tecnici e analitici.
+    <button>Ok, accetto</button>
+  </div>
+
+  <header id="masthead">
+    <div class="topbar utility">
+      <a href="https://www.unito.it">UniTo.it</a>
+      <a href="https://www.unito.it/servizi">Servizi</a>
+      <a href="#" class="lingua" hreflang="en">English</a>
+    </div>
+    <nav class="megamenu mainmenu" role="navigation" aria-label="menu principale">
+      <ul>
+        <li><a href="/dipartimento">Il Dipartimento</a></li>
+        <li><a href="/didattica">Didattica</a>
+          <ul>
+            <li><a href="/didattica/corsi">Corsi di studio</a></li>
+            <li><a href="/didattica/orari">Orari delle lezioni</a></li>
+            <li><a href="/didattica/esami">Appelli d'esame</a></li>
+          </ul>
+        </li>
+        <li><a href="/ricerca">Ricerca</a></li>
+        <li><a href="/laurearsi">Laurearsi</a></li>
+        <li><a href="/contatti">Contatti</a></li>
+      </ul>
+    </nav>
+    <div class="breadcrumb">
+      <a href="/">Home</a> / <a href="/didattica">Didattica</a> / <span>Laurearsi</span>
+    </div>
+  </header>
+
+  <div id="corpo-pagina" class="layout-due-colonne">
+    <main id="contenuto-principale">
+      <h1>Laurearsi: calendario delle sedute</h1>
+      <p>
+        La seduta di laurea è organizzata dal Dipartimento e vale per tutti i
+        corsi di studio afferenti. Di seguito il calendario con le date delle
+        sedute e i termini per gli adempimenti. Il calendario è identico per i
+        corsi del Dipartimento; requisiti e criteri specifici sono pubblicati
+        sulla pagina di ciascun corso.
+      </p>
+
+      <table class="calendario">
+        <caption>Sedute di laurea — anno accademico 2024/2025</caption>
+        <thead>
+          <tr><th>Sessione</th><th>Domanda online</th><th>Consegna tesi</th><th>Seduta</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Sessione estiva</td><td>05/06/2025</td><td>19/06/2025</td><td>10/07/2025</td></tr>
+          <tr><td>Sessione autunnale</td><td>04/09/2025</td><td>18/09/2025</td><td>09/10/2025</td></tr>
+          <tr><td>Sessione straordinaria</td><td>06/11/2025</td><td>20/11/2025</td><td>11/12/2025</td></tr>
+          <tr><td>Sessione invernale</td><td>08/01/2026</td><td>22/01/2026</td><td>12/02/2026</td></tr>
+        </tbody>
+      </table>
+
+      <p>
+        Le domande si presentano esclusivamente online dal portale di Ateneo.
+        Per problemi tecnici rivolgersi alla segreteria studenti.
+      </p>
+    </main>
+
+    <aside id="colonna-destra" class="sidebar" role="complementary">
+      <div class="box-servizio widget">
+        <h3>Link utili</h3>
+        <ul>
+          <li><a href="https://www.unito.it/servizi/lo-studio/segreterie-studenti">Segreterie studenti</a></li>
+          <li><a href="/laurearsi/modulistica">Modulistica</a></li>
+          <li><a href="/laurearsi/faq">Domande frequenti</a></li>
+        </ul>
+      </div>
+      <div class="box-servizio widget social">
+        <h3>Seguici</h3>
+        <a href="https://facebook.com/unito">Facebook</a>
+        <a href="https://instagram.com/unito">Instagram</a>
+      </div>
+    </aside>
+  </div>
+
+  <footer id="footer-unito" role="contentinfo">
+    <div class="footer-cols">
+      <div><a href="https://www.unito.it/ateneo">Ateneo</a>
+           <a href="https://www.unito.it/servizi">Servizi online</a></div>
+      <div><a href="https://www.unito.it/privacy">Privacy</a>
+           <a href="https://www.unito.it/note-legali">Note legali</a>
+           <a href="#" class="cookie">Preferenze cookie</a></div>
+    </div>
+    <p>Università degli Studi di Torino - Via Verdi 8, 10124 Torino - P.I. 02099550010</p>
+  </footer>
+
+  <script>
+    // Rumore: caricamento asincrono di widget e tracking.
+    window.addEventListener('load', function(){
+      document.querySelectorAll('.avviso-cookie button').forEach(function(b){
+        b.onclick = function(){ document.querySelector('.avviso-cookie').remove(); };
+      });
+    });
+  </script>
+</body>
+</html>

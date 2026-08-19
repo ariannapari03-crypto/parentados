@@ -94,7 +94,7 @@ Il valore del sistema è mettere insieme, per corso, informazioni che oggi stann
 
 - [x] **① Impalcatura e schema** — `npm run db:push` crea le tabelle; il test di lettura/scrittura passa.
 - [x] **② Scarica con allegati** — data una URL: grezzo + hash salvati; se la pagina rimanda a PDF, vengono seguiti e salvati legati alla pagina. Verificato sul caso PAO (nessuna data nell'HTML → il PDF del calendario viene seguito).
-- [ ] ③ Ritaglio
+- [x] **③ Ritaglio** — toglie navigazione, piè di pagina, riquadri di servizio e script. Su tre pagine (UniBo Scienze storiche, UniBo PAO, UniTO Lingue) il testo ritagliato è sotto il 15% dell'originale e nessuna tabella di scadenze va persa (le tabelle sono protette dalla rimozione).
 - [ ] ④ Estrazione
 - [ ] ⑤ Revisione
 - [ ] ⑥ Pagine pubbliche

@@ -60,3 +60,4 @@ Si costruisce un pezzo per volta, ognuno con un criterio secco di completamento
   ```bash
   npx tsx scripts/scarica.ts https://corsi.unibo.it/.../requisiti-e-scadenze
   ```
+- ③ **Ritaglio** — `ritaglia(html)` (`lib/ritaglio.ts`) toglie nav, piè di pagina, riquadri di servizio e script, **proteggendo le tabelle di scadenze**. Su tre atenei il testo scende sotto il 15% dell'originale senza perdere tabelle. ✅

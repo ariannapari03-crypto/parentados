@@ -1,0 +1,167 @@
+<!--
+  FIXTURE — UniBo · Scienze storiche e orientalistiche (LM)
+  Pagina: scadenze della prova finale (tabelle complete nell'HTML)
+  Fonte:  https://corsi.unibo.it/magistrale/ScienzeStoricheOrientalistiche/prova-finale
+
+  Ricostruzione fedele della struttura Plone di corsi.unibo.it (dominio bloccato
+  dalla policy di rete di questo ambiente: byte grezzi non catturabili qui).
+  Comportamento canonico coperto (CLAUDE.md): due tabelle di scadenze complete
+  nell'HTML, 30 date su due anni accademici. Le date qui sono di prova: servono
+  a verificare che il RITAGLIO non perda nessuna tabella. La pagina è volutamente
+  ricca di navigazione, cookie banner, piè di pagina e script, come l'originale.
+-->
+<!DOCTYPE html>
+<html lang="it" class="plone-toolbar-left">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prova finale — Scienze storiche e orientalistiche - Laurea Magistrale - Bologna</title>
+  <style>
+    /* Rumore: fogli di stile inline, tipici e voluminosi. Da ritagliare. */
+    #portal-mainnavigation ul { list-style: none; display: flex; gap: 1rem; }
+    #portal-footer { background: #12203a; color: #fff; padding: 2rem; }
+    .cookie-banner { position: fixed; bottom: 0; background: #222; color: #eee; }
+    .documentFirstHeading { font-size: 2rem; }
+    table.scadenze { width: 100%; border-collapse: collapse; }
+    table.scadenze th, table.scadenze td { border: 1px solid #ccd; padding: .4rem; }
+  </style>
+  <script type="application/json" id="plone-config">
+    {"portal_url":"https://corsi.unibo.it","language":"it","analytics":true,
+     "menu":["home","iscriversi","studiare","opportunita","contatti"],
+     "features":{"megamenu":true,"cookieConsent":true,"searchBox":true}}
+  </script>
+</head>
+<body class="portaltype-document section-magistrale">
+  <div class="cookie-banner" role="region" aria-label="cookie">
+    <p>Questo sito utilizza cookie tecnici e, previo consenso, cookie di
+       profilazione. Continuando la navigazione accetti l'uso dei cookie.</p>
+    <button>Accetta tutti</button><button>Rifiuta</button><button>Preferenze</button>
+  </div>
+
+  <header id="portal-top">
+    <div class="topbar utility">
+      <a href="https://www.unibo.it/it">Unibo.it</a>
+      <a href="/it/campus">Campus</a>
+      <a href="#" class="lingua">English</a>
+      <form role="search" class="search"><input type="search" placeholder="Cerca"><button>Cerca</button></form>
+    </div>
+    <nav id="portal-mainnavigation" class="mainmenu megamenu" role="navigation" aria-label="principale">
+      <ul>
+        <li><a href="/magistrale/ScienzeStoricheOrientalistiche">Home</a></li>
+        <li><a href="/magistrale/ScienzeStoricheOrientalistiche/iscriversi">Iscriversi</a>
+          <ul>
+            <li><a href="/magistrale/ScienzeStoricheOrientalistiche/iscriversi/requisiti">Requisiti</a></li>
+            <li><a href="/magistrale/ScienzeStoricheOrientalistiche/iscriversi/bando">Bando</a></li>
+            <li><a href="/magistrale/ScienzeStoricheOrientalistiche/iscriversi/tasse">Tasse</a></li>
+          </ul>
+        </li>
+        <li><a href="/magistrale/ScienzeStoricheOrientalistiche/studiare">Studiare</a>
+          <ul>
+            <li><a href="/magistrale/ScienzeStoricheOrientalistiche/studiare/piano">Piano di studi</a></li>
+            <li><a href="/magistrale/ScienzeStoricheOrientalistiche/studiare/orari">Orari</a></li>
+            <li><a href="/magistrale/ScienzeStoricheOrientalistiche/studiare/appelli">Appelli</a></li>
+          </ul>
+        </li>
+        <li><a href="/magistrale/ScienzeStoricheOrientalistiche/opportunita">Opportunità</a></li>
+        <li><a href="/magistrale/ScienzeStoricheOrientalistiche/contatti">Contatti</a></li>
+      </ul>
+    </nav>
+    <nav class="breadcrumb" aria-label="breadcrumb">
+      <a href="/">Home</a> › <a href="/magistrale">Lauree magistrali</a> ›
+      <a href="/magistrale/ScienzeStoricheOrientalistiche">Scienze storiche e orientalistiche</a> ›
+      <span>Prova finale</span>
+    </nav>
+  </header>
+
+  <div id="portal-columns">
+    <aside id="portal-column-one" class="sidebar navigation portletNavigationTree" role="navigation">
+      <h2>In questa sezione</h2>
+      <ul>
+        <li><a href="./presentazione">Presentazione della prova finale</a></li>
+        <li><a href="./requisiti">Requisiti di accesso</a></li>
+        <li><a href="./scadenze">Scadenze</a></li>
+        <li><a href="./commissioni">Commissioni</a></li>
+      </ul>
+    </aside>
+
+    <main id="content-core">
+      <article>
+        <h1 class="documentFirstHeading">Prova finale: scadenze</h1>
+        <div id="parent-fieldname-text">
+          <p>
+            Di seguito il calendario delle scadenze per la prova finale, distinto
+            per anno accademico. Per ogni sessione sono indicati il termine per la
+            presentazione della domanda di laurea, il termine per la consegna
+            dell'elaborato e la data della seduta.
+          </p>
+
+          <h2>Anno accademico 2023/2024</h2>
+          <table class="scadenze">
+            <thead>
+              <tr><th>Sessione</th><th>Domanda di laurea</th><th>Consegna elaborato</th><th>Seduta</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Estiva</td><td>10/06/2024</td><td>24/06/2024</td><td>15/07/2024</td></tr>
+              <tr><td>Autunnale</td><td>02/09/2024</td><td>16/09/2024</td><td>07/10/2024</td></tr>
+              <tr><td>Straordinaria</td><td>04/11/2024</td><td>18/11/2024</td><td>09/12/2024</td></tr>
+              <tr><td>Invernale</td><td>07/01/2025</td><td>20/01/2025</td><td>10/02/2025</td></tr>
+              <tr><td>Primaverile</td><td>03/03/2025</td><td>17/03/2025</td><td>07/04/2025</td></tr>
+            </tbody>
+          </table>
+
+          <h2>Anno accademico 2024/2025</h2>
+          <table class="scadenze">
+            <thead>
+              <tr><th>Sessione</th><th>Domanda di laurea</th><th>Consegna elaborato</th><th>Seduta</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Estiva</td><td>09/06/2025</td><td>23/06/2025</td><td>14/07/2025</td></tr>
+              <tr><td>Autunnale</td><td>01/09/2025</td><td>15/09/2025</td><td>06/10/2025</td></tr>
+              <tr><td>Straordinaria</td><td>03/11/2025</td><td>17/11/2025</td><td>15/12/2025</td></tr>
+              <tr><td>Invernale</td><td>07/01/2026</td><td>19/01/2026</td><td>09/02/2026</td></tr>
+              <tr><td>Primaverile</td><td>02/03/2026</td><td>16/03/2026</td><td>07/04/2026</td></tr>
+            </tbody>
+          </table>
+
+          <p>
+            Le scadenze possono subire variazioni: fa fede quanto pubblicato dalla
+            segreteria del corso. Per informazioni scrivere alla segreteria didattica.
+          </p>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <footer id="portal-footer" role="contentinfo">
+    <div class="footer-columns">
+      <div><h3>Ateneo</h3>
+        <a href="https://www.unibo.it/it/ateneo">Chi siamo</a>
+        <a href="https://www.unibo.it/it/ateneo/sedi-e-strutture">Sedi</a>
+        <a href="https://www.unibo.it/it/ateneo/lavora-con-noi">Lavora con noi</a></div>
+      <div><h3>Servizi</h3>
+        <a href="https://www.unibo.it/it/servizi-e-opportunita/biblioteche">Biblioteche</a>
+        <a href="https://www.unibo.it/it/servizi-e-opportunita/borse-di-studio">Borse di studio</a>
+        <a href="https://www.unibo.it/it/servizi-e-opportunita/alloggi">Alloggi</a></div>
+      <div><h3>Seguici</h3>
+        <a class="social" href="https://facebook.com/unibo">Facebook</a>
+        <a class="social" href="https://twitter.com/unibo">Twitter</a>
+        <a class="social" href="https://instagram.com/unibo">Instagram</a></div>
+      <div><h3>Note legali</h3>
+        <a href="https://www.unibo.it/it/ateneo/privacy-e-note-legali">Privacy</a>
+        <a href="https://www.unibo.it/it/ateneo/note-legali">Note legali</a>
+        <a href="#" class="cookie">Impostazioni cookie</a></div>
+    </div>
+    <p>© Alma Mater Studiorum - Università di Bologna - Via Zamboni 33 - 40126 Bologna - Partita IVA 01131710376</p>
+  </footer>
+
+  <script>
+    // Rumore: analytics e widget vari, da ritagliare.
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date()); gtag('config', 'UA-000000-0');
+    document.querySelectorAll('.cookie-banner button').forEach(function(b){
+      b.addEventListener('click', function(){ document.querySelector('.cookie-banner').remove(); });
+    });
+  </script>
+</body>
+</html>
