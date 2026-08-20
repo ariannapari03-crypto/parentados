@@ -18,9 +18,19 @@ function urlDatabase(): string {
 
 let poolCondiviso: Pool | null = null;
 
+// Postgres gestiti (Neon, Supabase, …) richiedono TLS. I loro certificati sono
+// emessi da una CA pubblica, quindi la verifica resta attiva. In locale, su
+// socket unix o senza sslmode, non si tocca nulla.
+function opzioniSsl(url: string): { rejectUnauthorized: boolean } | undefined {
+  return /sslmode=require|neon\.tech|supabase\.co|\.rds\.amazonaws\.com/.test(url)
+    ? { rejectUnauthorized: true }
+    : undefined;
+}
+
 export function pool(): Pool {
   if (!poolCondiviso) {
-    poolCondiviso = new Pool({ connectionString: urlDatabase() });
+    const url = urlDatabase();
+    poolCondiviso = new Pool({ connectionString: url, ssl: opzioniSsl(url) });
   }
   return poolCondiviso;
 }
