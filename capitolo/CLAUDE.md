@@ -3,6 +3,10 @@
 Raccoglitore di regole e scadenze della tesi dagli atenei italiani, e pagine pubbliche generate da quei dati.
 Non è ancora l'app per gli studenti: non costruire funzioni per studenti o relatori senza che siano richieste esplicitamente.
 
+### Agnostico rispetto all'ateneo — non negoziabile
+Il sistema non è limitato a un elenco fisso di atenei. UniBo, UniTO e Bocconi sono **solo casi di prova**: non cablare mai nel codice un elenco di università.
+L'ingresso è un **campo di testo** dove si inseriscono uno o più atenei; ognuno viene **cercato sul momento** sul web, e da lì si scoprono i corsi e le pagine della prova finale. Qualunque ateneo italiano deve poter entrare così, senza toccare il codice.
+
 ## Cosa fa questo sistema
 
 1. Scopre i corsi di laurea di un ateneo e le pagine dove stanno le regole della prova finale.
@@ -98,8 +102,8 @@ Il valore del sistema è mettere insieme, per corso, informazioni che oggi stann
 - [x] **④ Estrazione** — due prompt versionati (calendario di dipartimento, regole di corso) su modello iniettabile. Ogni proposta è ancorata: `fonte_citazione` deve essere sottostringa del testo, la data deve comparire scritta (mai stimata), altrimenti la scadenza è scartata. Verificato: 30 date su Scienze storiche, 9 nel PDF allegato di PAO; lunghezza «orientativa» resta non vincolante. PDF letti con pdf-parse.
 - [x] **⑤ Revisione** — pagina `/revisione` protetta da password (`REVISIONE_PASSWORD`), guidata da tastiera (C conferma · S scarta · E modifica · J/K scorri). Le transizioni di stato le compie solo la persona; le letture pubbliche filtrano sempre su `confermata`. Data-layer verificato in test; l'app compila (`next build`).
 - [x] **⑥ Pagine pubbliche** — una pagina per corso (`/corso/[slug]`), generata staticamente (SSG) con dati strutturati JSON-LD, la data di ultima verifica in chiaro e il link alla fonte accanto a ogni singola affermazione; lacune visibili, consigli non vincolanti marcati come tali. Solo dati `confermata`. Indice a `/corsi`. Verificato: build che genera 20 pagine statiche, fonte accanto a ogni dato. Migrazione 0002 aggiunge `confermato_il`.
-- [ ] ⑦ Ricognizione
+- [x] **⑦ Ricognizione** — dato il nome di un ateneo in un campo di testo (pagina `/ricognizione`, uno per riga), lo cerca **sul momento** sul web (strumento `web_search` del modello) e ne enumera i corsi dai link reali del catalogo, salvandoli come *da verificare*. Search e fetch iniettabili; i corsi vengono solo dalle pagine reali, mai inventati. CLI `scripts/scopri.ts`. Verificato: estrazione dei corsi dal catalogo + persistenza idempotente (il criterio dei «50 corsi reali» richiede un ambiente con rete e chiave API).
 
 Un compito per sessione. Non passare al successivo senza il criterio di completamento del precedente.
 
-**Dopo il ⑥, il brief dice di fermarsi e guardare i dati di traffico** prima di fare il ⑦.
+**Nota traffico:** il brief consiglia, dopo il ⑥, di guardare i dati di traffico prima di scalare. Vale ancora: la ricognizione ⑦ apre la porta a qualunque ateneo, ma prima di scoprirne a migliaia conviene sapere se le pagine portano visite.

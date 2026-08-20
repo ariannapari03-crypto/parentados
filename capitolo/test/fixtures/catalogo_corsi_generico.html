@@ -1,0 +1,55 @@
+<!--
+  FIXTURE — pagina generica di catalogo dei corsi di un ateneo.
+  Serve a verificare che la ricognizione (compito ⑦) estragga i corsi dai link
+  reali della pagina, distinguendoli dalla navigazione, senza inventare nulla.
+  Struttura tipica: schede-corso con link a /corsi/<livello>/<slug>.
+-->
+<!DOCTYPE html>
+<html lang="it">
+<head><meta charset="utf-8"><title>Corsi di laurea — Ateneo di prova</title></head>
+<body>
+  <header>
+    <nav aria-label="principale">
+      <a href="/">Home</a>
+      <a href="/corsi">Corsi</a>
+      <a href="/servizi">Servizi</a>
+      <a href="/contatti">Contatti</a>
+      <a href="https://www.miur.gov.it">Ministero</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Offerta formativa — Corsi di laurea</h1>
+
+    <section aria-label="triennali">
+      <h2>Lauree triennali</h2>
+      <ul>
+        <li><a href="/corsi/laurea/informatica">Informatica</a></li>
+        <li><a href="/corsi/laurea/lettere">Lettere</a></li>
+        <li><a href="/corsi/laurea/economia-aziendale">Economia aziendale</a></li>
+      </ul>
+    </section>
+
+    <section aria-label="magistrali">
+      <h2>Lauree magistrali</h2>
+      <ul>
+        <li><a href="/corsi/laurea-magistrale/scienze-storiche">Scienze storiche e orientalistiche</a></li>
+        <li><a href="/corsi/laurea-magistrale/politica-amministrazione">Politica, amministrazione e organizzazione</a></li>
+        <li><a href="/corsi/laurea-magistrale/lingue">Lingue e letterature straniere</a></li>
+      </ul>
+    </section>
+
+    <aside>
+      <h2>Link utili</h2>
+      <a href="/corsi">Torna all'elenco dei corsi</a>
+      <a href="/iscrizioni">Come iscriversi</a>
+      <a href="https://esse3.ateneo.it">Segreteria online</a>
+    </aside>
+  </main>
+
+  <footer>
+    <a href="/privacy">Privacy</a>
+    <a href="/note-legali">Note legali</a>
+  </footer>
+</body>
+</html>

@@ -28,7 +28,7 @@ export async function accedi(
     httpOnly: true,
     sameSite: 'lax',
     secure: process.env.NODE_ENV === 'production',
-    path: '/revisione',
+    path: '/', // condiviso da /revisione e /ricognizione (strumenti da operatore)
     maxAge: 60 * 60 * 8, // 8 ore
   });
   redirect('/revisione');
@@ -36,7 +36,7 @@ export async function accedi(
 
 export async function esci(): Promise<void> {
   const c = await cookies();
-  c.delete(NOME_COOKIE);
+  c.delete({ name: NOME_COOKIE, path: '/' });
   redirect('/revisione');
 }
 

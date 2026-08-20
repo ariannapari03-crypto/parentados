@@ -73,3 +73,8 @@ Si costruisce un pezzo per volta, ognuno con un criterio secco di completamento
   REVISIONE_PASSWORD=... npm run dev   # poi apri /revisione
   ```
 - ⑥ **Pagine pubbliche** — una pagina per corso `/corso/[slug]`, generata staticamente (SSG), con dati JSON-LD, data di ultima verifica e **link alla fonte accanto a ogni dato**; solo dati `confermata`, lacune visibili, consigli marcati come non vincolanti. Indice a `/corsi`. `npm run build` genera una pagina per corso. ✅
+- ⑦ **Ricognizione** — pagina `/ricognizione` (protetta): un **campo di testo** dove inserire uno o più atenei (uno per riga), **cercati sul momento** sul web (`web_search` del modello); i corsi vengono scoperti dai link reali del catalogo e salvati come *da verificare*. Nessun elenco fisso di atenei. CLI: ✅
+
+  ```bash
+  npx tsx scripts/scopri.ts "Università di Bologna" "Università di Torino"
+  ```
