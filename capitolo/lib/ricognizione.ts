@@ -28,12 +28,28 @@ export interface CorsoScoperto {
 }
 
 // Un link è una pagina di corso se il percorso ha un segmento di catalogo
-// (corsi/laurea/…) seguito da uno slug: distingue le schede dei corsi dalle voci
-// di menu e dall'indice del catalogo.
-const PERCORSO_CORSO = /\/(corsi|corso|laurea|lauree|corso-di-laurea|corsi-di-laurea|cds|degree)\/[^/?#]+/i;
+// (corsi/laurea/magistrale/…) seguito da uno slug: distingue le schede dei corsi
+// dalle voci di menu e dall'indice del catalogo. Ampio di proposito: tanto ogni
+// voce scoperta resta «da verificare» da una persona.
+const PERCORSO_CORSO =
+  /\/(corsi|corso|laurea|lauree|magistrale|magistrali|triennale|triennali|laurea-magistrale|laurea-triennale|laurea-magistrale-a-ciclo-unico|laurea-a-ciclo-unico|ciclo-unico|corso-di-laurea|corsi-di-laurea|corso-di-studio|corsi-di-studio|cdl|cds|degree|degree-programmes|study)\/[^/?#]+/i;
 
 // Testi d'ancora che denotano un corso.
-const TESTO_CORSO = /^(corso di laurea|laurea (magistrale|triennale|magistrale a ciclo unico)|laurea in|corso di studio)/i;
+const TESTO_CORSO =
+  /^(corso di laurea|laurea (magistrale|triennale|magistrale a ciclo unico)|laurea in|corso di studio|degree in|bachelor|master)/i;
+
+// Vero se l'URL (assoluto) sembra la scheda di un singolo corso. Usato sia per i
+// link nella pagina del catalogo, sia per gli URL restituiti dalla ricerca web.
+export function ePaginaDiCorso(urlAssoluto: string, testo = ''): boolean {
+  if (!/^https?:/i.test(urlAssoluto)) return false;
+  let percorso: string;
+  try {
+    percorso = new URL(urlAssoluto).pathname;
+  } catch {
+    return false;
+  }
+  return PERCORSO_CORSO.test(percorso) || TESTO_CORSO.test(testo.trim());
+}
 
 export function scopriCorsi(html: string, baseUrl: string): CorsoScoperto[] {
   const radice = parse(html);
@@ -48,11 +64,8 @@ export function scopriCorsi(html: string, baseUrl: string): CorsoScoperto[] {
     } catch {
       continue;
     }
-    if (!/^https?:/i.test(assoluto)) continue;
-    const percorso = new URL(assoluto).pathname;
     const testo = a.text.replace(/\s+/g, ' ').trim();
-    const paginaDiCorso = PERCORSO_CORSO.test(percorso) || TESTO_CORSO.test(testo);
-    if (!paginaDiCorso) continue;
+    if (!ePaginaDiCorso(assoluto, testo)) continue;
     if (testo.length < 3) continue; // scarta ancore vuote/icone
     const chiave = assoluto.split('#')[0];
     if (visti.has(chiave)) continue;
@@ -114,23 +127,49 @@ export interface EsitoRicognizione {
   nuovi: number;
 }
 
-// Orchestrazione: cerca l'ateneo sul momento, apre il catalogo, enumera i corsi
-// e li salva (da verificare). Search e fetch sono iniettabili.
+function unisciCorsi(...liste: CorsoScoperto[][]): CorsoScoperto[] {
+  const visti = new Set<string>();
+  const out: CorsoScoperto[] = [];
+  for (const c of liste.flat()) {
+    if (visti.has(c.url)) continue;
+    visti.add(c.url);
+    out.push(c);
+  }
+  return out;
+}
+
+// Orchestrazione: cerca l'ateneo sul momento e ne enumera i corsi da DUE fonti,
+// così è robusta anche quando il catalogo è reso via JavaScript (fetch cieco):
+//   1. gli URL dei risultati di ricerca che sembrano schede di corso;
+//   2. i link nella pagina del catalogo, se leggibili.
+// Search e fetch sono iniettabili.
 export async function ricognizioneAteneo(
   nome: string,
   deps: { cerca: Cercatore; recupera?: Recuperatore }
 ): Promise<EsitoRicognizione> {
   const recupera = deps.recupera ?? recuperaConFetch;
-  const risultati = await deps.cerca(`${nome} corsi di laurea`);
+  const risultati = await deps.cerca(`${nome} corsi di laurea magistrale triennale`);
   const catalogoUrl = scegliCatalogo(risultati);
-
   const ateneoId = await upsertAteneo(nome);
-  if (!catalogoUrl) {
-    return { ateneoId, catalogoUrl: null, scoperti: [], nuovi: 0 };
+
+  // 1) schede di corso direttamente dai risultati di ricerca (URL reali).
+  const daRicerca: CorsoScoperto[] = risultati
+    .filter((r) => ePaginaDiCorso(r.url, r.titolo))
+    .map((r) => ({ nome: r.titolo || r.url, url: r.url.split('#')[0] }));
+
+  // 2) link dalla pagina del catalogo (se raggiungibile e non solo-JS).
+  let daCatalogo: CorsoScoperto[] = [];
+  if (catalogoUrl) {
+    try {
+      const pagina = await recupera(catalogoUrl);
+      daCatalogo = scopriCorsi(pagina.corpo.toString('utf8'), pagina.urlFinale);
+    } catch {
+      // un catalogo irraggiungibile non azzera la ricognizione: restano i
+      // candidati dalla ricerca.
+    }
   }
 
-  const pagina = await recupera(catalogoUrl);
-  const scoperti = scopriCorsi(pagina.corpo.toString('utf8'), pagina.urlFinale);
+  const scoperti = unisciCorsi(daCatalogo, daRicerca);
   const nuovi = await salvaCorsiScoperti(ateneoId, scoperti);
-  return { ateneoId, catalogoUrl: pagina.urlFinale, scoperti, nuovi };
+  return { ateneoId, catalogoUrl, scoperti, nuovi };
 }

@@ -10,21 +10,26 @@ import type { Cercatore, RisultatoRicerca } from './ricognizione';
 // dove il fetch diretto verso i siti degli atenei è filtrato. Richiede però una
 // chiave API e rete verso l'API: non è esercitabile in ambienti senza chiave.
 
-export function cercatoreAnthropic(modello = 'claude-opus-5'): Cercatore {
-  const client = new Anthropic();
+// Sonnet (rapido) basta per trovare un catalogo: non serve Opus. Effort basso e
+// poche ricerche tengono la latenza bassa. Timeout esplicito per non restare
+// appesi. La ricerca deve restare veloce: è solo per trovare le URL giuste.
+export function cercatoreAnthropic(modello = 'claude-sonnet-5'): Cercatore {
+  const client = new Anthropic({ timeout: 40_000, maxRetries: 1 });
   return async (query: string): Promise<RisultatoRicerca[]> => {
     // Campi come `tools` server-side possono non essere tipizzati nell'SDK:
     // costruiamo i parametri senza vincolo di tipo.
     const parametri: Record<string, unknown> = {
       model: modello,
-      max_tokens: 1024,
-      tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 3 }],
+      max_tokens: 700,
+      output_config: { effort: 'low' },
+      tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 2 }],
       messages: [
         {
           role: 'user',
           content:
-            `Cerca sul web il catalogo dei corsi di laurea e le pagine dei singoli ` +
-            `corsi per: "${query}". Restituisci le pagine ufficiali dell'ateneo.`,
+            `Fai UNA ricerca web per trovare la pagina di catalogo dei corsi di ` +
+            `laurea di: "${query}". Restituisci le pagine ufficiali dell'ateneo, ` +
+            `senza commenti.`,
         },
       ],
     };

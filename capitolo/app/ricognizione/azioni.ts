@@ -27,14 +27,16 @@ export async function avviaRicognizione(
   if (nomi.length === 0) return { righe: [] };
 
   const cerca = cercatoreAnthropic();
-  const righe: EsitoUi['righe'] = [];
-  for (const nome of nomi) {
-    try {
-      const esito = await ricognizioneAteneo(nome, { cerca });
-      righe.push({ ateneo: nome, catalogo: esito.catalogoUrl, scoperti: esito.scoperti.length, nuovi: esito.nuovi });
-    } catch (e) {
-      righe.push({ ateneo: nome, catalogo: null, scoperti: 0, nuovi: 0, errore: (e as Error).message });
-    }
-  }
+  // Gli atenei in parallelo: il tempo totale è quello del più lento, non la somma.
+  const righe = await Promise.all(
+    nomi.map(async (nome): Promise<EsitoUi['righe'][number]> => {
+      try {
+        const esito = await ricognizioneAteneo(nome, { cerca });
+        return { ateneo: nome, catalogo: esito.catalogoUrl, scoperti: esito.scoperti.length, nuovi: esito.nuovi };
+      } catch (e) {
+        return { ateneo: nome, catalogo: null, scoperti: 0, nuovi: 0, errore: (e as Error).message };
+      }
+    })
+  );
   return { righe };
 }
