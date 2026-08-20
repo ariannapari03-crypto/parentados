@@ -97,7 +97,9 @@ Il valore del sistema è mettere insieme, per corso, informazioni che oggi stann
 - [x] **③ Ritaglio** — toglie navigazione, piè di pagina, riquadri di servizio e script. Su tre pagine (UniBo Scienze storiche, UniBo PAO, UniTO Lingue) il testo ritagliato è sotto il 15% dell'originale e nessuna tabella di scadenze va persa (le tabelle sono protette dalla rimozione).
 - [x] **④ Estrazione** — due prompt versionati (calendario di dipartimento, regole di corso) su modello iniettabile. Ogni proposta è ancorata: `fonte_citazione` deve essere sottostringa del testo, la data deve comparire scritta (mai stimata), altrimenti la scadenza è scartata. Verificato: 30 date su Scienze storiche, 9 nel PDF allegato di PAO; lunghezza «orientativa» resta non vincolante. PDF letti con pdf-parse.
 - [x] **⑤ Revisione** — pagina `/revisione` protetta da password (`REVISIONE_PASSWORD`), guidata da tastiera (C conferma · S scarta · E modifica · J/K scorri). Le transizioni di stato le compie solo la persona; le letture pubbliche filtrano sempre su `confermata`. Data-layer verificato in test; l'app compila (`next build`).
-- [ ] ⑥ Pagine pubbliche
+- [x] **⑥ Pagine pubbliche** — una pagina per corso (`/corso/[slug]`), generata staticamente (SSG) con dati strutturati JSON-LD, la data di ultima verifica in chiaro e il link alla fonte accanto a ogni singola affermazione; lacune visibili, consigli non vincolanti marcati come tali. Solo dati `confermata`. Indice a `/corsi`. Verificato: build che genera 20 pagine statiche, fonte accanto a ogni dato. Migrazione 0002 aggiunge `confermato_il`.
 - [ ] ⑦ Ricognizione
 
 Un compito per sessione. Non passare al successivo senza il criterio di completamento del precedente.
+
+**Dopo il ⑥, il brief dice di fermarsi e guardare i dati di traffico** prima di fare il ⑦.

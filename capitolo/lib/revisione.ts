@@ -109,7 +109,7 @@ export async function contaProposte(): Promise<{ scadenze: number; regole: numbe
 // --- transizioni di stato: solo una persona le compie [inv. 4] ---
 
 export async function confermaScadenza(id: number): Promise<void> {
-  await query("update scadenza set stato='confermata' where id=$1", [id]);
+  await query("update scadenza set stato='confermata', confermato_il=now() where id=$1", [id]);
 }
 export async function scartaScadenza(id: number): Promise<void> {
   await query("update scadenza set stato='scartata' where id=$1", [id]);
@@ -138,13 +138,13 @@ export async function correggiScadenza(id: number, patch: CorrezioneScadenza): P
   if (patch.data_a !== undefined) set('data_a', patch.data_a);
   if (patch.blocca !== undefined) set('blocca', patch.blocca);
   if (patch.fonte_citazione !== undefined) set('fonte_citazione', patch.fonte_citazione);
-  campi.push("stato = 'confermata'");
+  campi.push("stato = 'confermata'", 'confermato_il = now()');
   valori.push(id);
   await query(`update scadenza set ${campi.join(', ')} where id = $${valori.length}`, valori);
 }
 
 export async function confermaRegola(id: number): Promise<void> {
-  await query("update regola set stato='confermata' where id=$1", [id]);
+  await query("update regola set stato='confermata', confermato_il=now() where id=$1", [id]);
 }
 export async function scartaRegola(id: number): Promise<void> {
   await query("update regola set stato='scartata' where id=$1", [id]);
@@ -168,7 +168,7 @@ export async function correggiRegola(id: number, patch: CorrezioneRegola): Promi
   if (patch.testo !== undefined) set('testo', patch.testo);
   if (patch.vincolante !== undefined) set('vincolante', patch.vincolante);
   if (patch.fonte_citazione !== undefined) set('fonte_citazione', patch.fonte_citazione);
-  campi.push("stato = 'confermata'");
+  campi.push("stato = 'confermata'", 'confermato_il = now()');
   valori.push(id);
   await query(`update regola set ${campi.join(', ')} where id = $${valori.length}`, valori);
 }
