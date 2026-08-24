@@ -53,8 +53,9 @@ export function Ricognitore() {
       )}
 
       <p style={{ marginTop: 24, fontSize: 13, color: '#6b7280' }}>
-        I corsi scoperti vanno poi scaricati ed estratti (pipeline), quindi confermati in
-        <a href="/revisione"> revisione</a> prima di finire sulle pagine pubbliche.
+        Poi vai a <a href="/elabora">elaborare i corsi</a> (scarica + estrai) e a
+        <a href="/revisione"> confermare</a> le proposte: solo allora compaiono nella
+        scrivania dello studente e sulle pagine pubbliche.
       </p>
     </main>
   );

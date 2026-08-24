@@ -49,7 +49,7 @@ export async function elaboraRegoleCorso(
       : ritaglia(corpo.toString('utf8')).testo;
 
   // ④ estrai le regole (proposte, con fonte ancorata) e salvale.
-  const est = await estraiRegole(testo, scaricato.paginaId ? url : url, opzioni.cliente);
+  const est = await estraiRegole(testo, url, opzioni.cliente);
   const salvato = await salvaRegole(corsoId, scaricato.paginaId, est);
 
   return {
