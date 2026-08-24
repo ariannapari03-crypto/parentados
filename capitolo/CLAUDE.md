@@ -78,9 +78,19 @@ Coprono i tre comportamenti che abbiamo osservato:
 
 ---
 
-## Ciò che è fuori perimetro
+## Fase 2 — Tool per lo studente (perimetro aggiornato, autorizzato)
 
-Finché non richiesto esplicitamente: account e autenticazione degli studenti, lato relatore, bacheca degli argomenti, conversazioni, pagamenti, calcolo del voto per il singolo studente.
+Su richiesta esplicita dell'utente, oltre al raccoglitore si costruisce il **tool per lo studente**: una «scrivania della tesi» per corso, costruita SOPRA i dati raccolti (regole + scadenze con fonti). Gli invarianti restano tutti validi — in particolare: mai date inventate [inv. 1], fonte su ogni dato [inv. 2], i consigli restano consigli e non bloccano mai [inv. 9], niente in pagina se non `confermata` [inv. 4].
+
+Funzioni del tool studente (area pubblica `/tesi`, senza login; le scelte personali stanno nel browser):
+1. **Le mie regole e scadenze** — scegli ateneo+corso, vedi tutto in un posto con la fonte.
+2. **Promemoria** — countdown alle scadenze + esportazione calendario `.ics`.
+3. **Checklist + controlli** — struttura della tesi per il corso; controlli non bloccanti (lunghezza, formato).
+4. **Assistente di scrittura** — scaletta, riscrittura, chiarezza, bibliografia, con il contesto del corso.
+
+## Ciò che resta fuori perimetro
+
+Finché non richiesto esplicitamente: lato relatore, bacheca degli argomenti, conversazioni, pagamenti, calcolo del voto per il singolo studente. (Gli account studente non servono per la Fase 2: lo stato personale sta nel browser; si aggiungono solo se richiesti.)
 
 Se una richiesta sembra portare lì, chiedi conferma prima di scrivere codice.
 

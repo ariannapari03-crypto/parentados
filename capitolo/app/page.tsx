@@ -17,9 +17,12 @@ export default function Home() {
         formato, criteri di voto e scadenze delle sessioni — verificate a mano, con la
         <strong> fonte ufficiale accanto a ogni dato</strong>.
       </p>
-      <p>
-        <a href="/corsi" style={{ display: 'inline-block', padding: '10px 18px', borderRadius: 8, background: '#111', color: '#fff', textDecoration: 'none', fontWeight: 600 }}>
-          Vedi i corsi →
+      <p style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+        <a href="/tesi" style={{ display: 'inline-block', padding: '10px 18px', borderRadius: 8, background: '#111', color: '#fff', textDecoration: 'none', fontWeight: 600 }}>
+          Apri la tua tesi →
+        </a>
+        <a href="/corsi" style={{ display: 'inline-block', padding: '10px 18px', borderRadius: 8, background: '#fff', color: '#111', border: '1px solid #d1d5db', textDecoration: 'none', fontWeight: 600 }}>
+          Sfoglia i corsi
         </a>
       </p>
     </main>
