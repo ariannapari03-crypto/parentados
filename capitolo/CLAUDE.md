@@ -87,6 +87,7 @@ Funzioni del tool studente (area pubblica `/tesi`, senza login; le scelte person
 2. **Promemoria** — countdown alle scadenze + esportazione calendario `.ics`.
 3. **Checklist + controlli** — struttura della tesi per il corso; controlli non bloccanti (lunghezza, formato).
 4. **Assistente di scrittura** — scaletta, riscrittura, chiarezza, bibliografia, con il contesto del corso.
+5. **L'impianto** (§ 3 Momento 2, la spina dorsale) — flag di disciplina (umanistica/STEM → indice, stile citazionale, persona verbale, editor, database), domanda di ricerca in cima, briefing vivo, indice ad albero con numerazione decimale (max 3 livelli), peso in pagine e stato per sezione (vuota→in bozza→prima stesura→revisionata→chiusa), avvisi che guidano senza bloccare (domanda mancante, pagine mancanti, squilibri, ordine di stesura). Il template è dichiarato come **consuetudine metodologica**, non come regola d'ateneo: nessuna fonte istituzionale falsa [inv. 2]; la lunghezza del corso, dove `confermata`, appare con la sua fonte reale. Logica pura in `lib/impianto.ts` (testata), UI in `app/tesi/[slug]/Impianto.tsx`, stato solo nel browser.
 
 ## Ciò che resta fuori perimetro
 

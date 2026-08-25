@@ -8,6 +8,7 @@ import {
 import { giorniA, testoCountdown, etichettaTipoScadenza } from '@/lib/tesi';
 import { Checklist } from './Checklist';
 import { Assistente } from './Assistente';
+import { Impianto } from './Impianto';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60; // l'assistente chiama il modello
@@ -58,6 +59,16 @@ export default async function ScrivaniaTesi({ params }: { params: Promise<{ slug
 
   const puntiRegole = regole.map((r) => r.testo);
 
+  // La regola di lunghezza del corso, se confermata: entra nell'impianto con la
+  // sua fonte reale. Il template dell'impianto è invece una consuetudine, e come
+  // tale è dichiarato — non gli si attribuisce una fonte d'ateneo. [inv. 2, 9]
+  const rl = regole.find(
+    (r) => r.tipo === 'lunghezza' || /lunghezz|battut|pagine|parole|cartelle/i.test(r.testo)
+  );
+  const regolaLunghezza = rl
+    ? { testo: rl.testo, vincolante: rl.vincolante, fonte_url: rl.fonte_url, fonte_citazione: rl.fonte_citazione }
+    : null;
+
   return (
     <main style={S.main}>
       <nav style={{ fontSize: 13, marginBottom: 12 }}><a href="/tesi">← Cambia corso</a></nav>
@@ -71,6 +82,16 @@ export default async function ScrivaniaTesi({ params }: { params: Promise<{ slug
         {verifica ? <>Ultima verifica: <strong>{formatta(verifica)}</strong>. </> : 'Dati in corso di verifica. '}
         I dati sono verificati a mano e ogni riga porta la sua fonte.
       </p>
+
+      {/* L'IMPIANTO — la spina dorsale (§ 3 Momento 2) */}
+      <section style={{ marginTop: 24 }}>
+        <h2 style={S.h2}>L’impianto</h2>
+        <p style={{ color: '#6b7280', fontSize: 14, marginTop: 4 }}>
+          La domanda di ricerca in cima, l’indice sotto. Il template è una consuetudine, non una
+          regola: guida, non blocca. Tutto resta sul tuo dispositivo.
+        </p>
+        <Impianto slug={slug} regolaLunghezza={regolaLunghezza} />
+      </section>
 
       {/* SCADENZE */}
       <section style={{ marginTop: 24 }}>
