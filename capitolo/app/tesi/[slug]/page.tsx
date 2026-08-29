@@ -9,6 +9,7 @@ import { giorniA, testoCountdown, etichettaTipoScadenza } from '@/lib/tesi';
 import { Checklist } from './Checklist';
 import { Assistente } from './Assistente';
 import { Impianto } from './Impianto';
+import { Bibliografia } from './Bibliografia';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60; // l'assistente chiama il modello
@@ -91,6 +92,12 @@ export default async function ScrivaniaTesi({ params }: { params: Promise<{ slug
           regola: guida, non blocca. Tutto resta sul tuo dispositivo.
         </p>
         <Impianto slug={slug} regolaLunghezza={regolaLunghezza} />
+      </section>
+
+      {/* BIBLIOGRAFIA + SCOUT (§ 4) */}
+      <section style={{ marginTop: 28 }}>
+        <h2 style={S.h2}>Bibliografia</h2>
+        <Bibliografia slug={slug} />
       </section>
 
       {/* SCADENZE */}

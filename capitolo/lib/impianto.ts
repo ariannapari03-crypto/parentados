@@ -291,3 +291,25 @@ export function avvisiImpianto(imp: Impianto): Avviso[] {
 
   return out;
 }
+
+// --- sezioni in lista piatta, con numerazione ------------------------------
+// Serve alla bibliografia: legare ogni fonte a un capitolo dell'impianto.
+
+export interface SezionePiatta {
+  id: string;
+  numero: string; // «2.1»
+  titolo: string;
+}
+
+export function sezioniPiatte(sezioni: Sezione[]): SezionePiatta[] {
+  const out: SezionePiatta[] = [];
+  const visita = (elenco: Sezione[], prefisso: number[]) => {
+    elenco.forEach((s, i) => {
+      const indici = [...prefisso, i];
+      out.push({ id: s.id, numero: numeroDecimale(indici), titolo: s.titolo });
+      visita(s.figli, indici);
+    });
+  };
+  visita(sezioni, []);
+  return out;
+}
