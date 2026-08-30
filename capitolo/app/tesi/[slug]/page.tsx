@@ -10,6 +10,7 @@ import { Checklist } from './Checklist';
 import { Assistente } from './Assistente';
 import { Impianto } from './Impianto';
 import { Bibliografia } from './Bibliografia';
+import { Modelli } from './Modelli';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60; // l'assistente chiama il modello
@@ -92,6 +93,12 @@ export default async function ScrivaniaTesi({ params }: { params: Promise<{ slug
           regola: guida, non blocca. Tutto resta sul tuo dispositivo.
         </p>
         <Impianto slug={slug} regolaLunghezza={regolaLunghezza} />
+      </section>
+
+      {/* MODELLI — tesi simili, solo l'ossatura (§ 3 Momento 2) */}
+      <section style={{ marginTop: 28 }}>
+        <h2 style={S.h2}>Modelli</h2>
+        <Modelli slug={slug} />
       </section>
 
       {/* BIBLIOGRAFIA + SCOUT (§ 4) */}
